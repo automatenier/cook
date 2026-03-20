@@ -29,13 +29,14 @@ def sync_gsheets_to_supabase():
             
         sh = gc.open_by_key(SHEET_ID)
         
-        all_payloads = []
-        for ws in sh.worksheets():
-            records = ws.get_all_records()
-            print(f"Fetched {len(records)} rows from worksheet '{ws.title}'.")
+        # Explicitly target ONLY the 'CRM' worksheet
+        ws = sh.worksheet("CRM")
+        records = ws.get_all_records()
+        print(f"Fetched {len(records)} rows from worksheet 'CRM'.")
 
-            # 2. Process & Sync
-            for r in records:
+        all_payloads = []
+        # Process & Sync
+        for r in records:
                 # Map columns accurately
                 name = str(r.get('3-Username', '')).strip()
                 if not name:
