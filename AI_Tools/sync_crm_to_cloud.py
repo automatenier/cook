@@ -29,10 +29,10 @@ def sync_gsheets_to_supabase():
             
         sh = gc.open_by_key(SHEET_ID)
         
-        # Explicitly target ONLY the 'CRM' worksheet
-        ws = sh.worksheet("CRM")
+        # Explicitly target ONLY the 'WA' worksheet
+        ws = sh.worksheet("WA")
         records = ws.get_all_records()
-        print(f"Fetched {len(records)} rows from worksheet 'CRM'.")
+        print(f"Fetched {len(records)} rows from worksheet 'WA'.")
 
         all_payloads = []
         # Process & Sync
