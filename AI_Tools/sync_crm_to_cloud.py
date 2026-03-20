@@ -79,9 +79,14 @@ def sync_gsheets_to_supabase():
         # 4. Connect to Supabase
         supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-        # 5. Upsert (Bulk)
-        # We use 'name' as the unique key for upserting
+        # 5. Clear old data and Upsert (Bulk)
         if payload_list:
+            # First, delete all existing records to ensure a clean sync
+            # Using a filter that matches all (like name != '')
+            supabase.table("leads").delete().neq("name", "").execute()
+            print("Cleared existing leads from Supabase.")
+            
+            # Now insert the fresh 168 leads
             result = supabase.table("leads").upsert(payload_list, on_conflict="name").execute()
             print(f"Successfully synced {len(payload_list)} total unique leads to Supabase cloud.")
         else:
