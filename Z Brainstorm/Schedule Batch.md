@@ -1,0 +1,5 @@
+| ID  | Video Path                                                | YT Link                                                                                                                                         | IG Link | FB Link |
+| --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
+| 01  | C:\Users\natha\OneDrive - Bina Nusantara\Cook\test123.mov |                                                                                                                                                 |         |         |
+| 02  | C:\Users\natha\OneDrive - Bina Nusantara\Cook\test123.mov |                                                                                                                                                 |         |         |
+| 03  | C:\Users\natha\OneDrive - Bina Nusantara\Cook\test123.mov | Cluster landed 2BR & 3BR dengan Smart Home by Panasonic rancangan Jepang, dibangun untuk profesional yang kerja di GIIC dan kawasan sekitarnya. |         |         |

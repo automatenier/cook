@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bikin Reel Otomatis Pakai Remotion — JO Consult</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    }
+
+    /* COVER */
+    .cover {
+      background: #1B3A6E;
+      padding: 56px 56px 48px;
+      color: #fff;
+    }
+
+    .cover .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .cover h1 {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .cover p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    .cover .brand-line {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* BODY */
+    .body {
+      padding: 48px 56px;
+    }
+
+    .intro-box {
+      background: #f0f4ff;
+      border-left: 4px solid #1B3A6E;
+      padding: 20px 24px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 40px;
+      font-size: 15px;
+      color: #2d3a5e;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #1B3A6E;
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-top: 28px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 15px;
+      color: #3a3a5c;
+      margin-bottom: 14px;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      font-size: 15px;
+      color: #3a3a5c;
+      margin-bottom: 8px;
+    }
+
+    li strong {
+      color: #1a1a2e;
+    }
+
+    /* CODE BLOCKS */
+    .code-block {
+      background: #111827;
+      color: #e2e8f0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 20px 24px;
+      border-radius: 8px;
+      margin: 16px 0 24px;
+      overflow-x: auto;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    .code-inline {
+      background: #f0f4ff;
+      color: #1B3A6E;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* STEP INDICATOR */
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      background: #1B3A6E;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-content { flex: 1; }
+    .step-content h3 { margin-top: 0; font-size: 16px; }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 28px;
+      font-size: 14px;
+    }
+
+    thead tr {
+      background: #1B3A6E;
+      color: #fff;
+    }
+
+    thead th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    tbody tr:nth-child(even) { background: #f8f9ff; }
+    tbody tr:nth-child(odd)  { background: #fff; }
+
+    tbody td {
+      padding: 11px 16px;
+      color: #3a3a5c;
+      border-bottom: 1px solid #eef0f8;
+    }
+
+    tbody td strong { color: #1a1a2e; }
+
+    /* CALLOUT */
+    .callout {
+      background: #fff8e6;
+      border: 1px solid #f5c842;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #5a4a00;
+    }
+
+    .callout strong { color: #3d3200; }
+
+    /* DIVIDER */
+    hr {
+      border: none;
+      border-top: 1px solid #eef0f8;
+      margin: 40px 0;
+    }
+
+    /* CTA */
+    .cta-box {
+      background: #1B3A6E;
+      color: #fff;
+      padding: 36px 40px;
+      border-radius: 10px;
+      margin-top: 48px;
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      color: #fff;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .cta-box p {
+      color: rgba(255,255,255,0.75);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .cta-pill {
+      display: inline-block;
+      background: #fff;
+      color: #1B3A6E;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 28px;
+      border-radius: 30px;
+      letter-spacing: 0.5px;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 24px 56px;
+      background: #f5f6fa;
+      font-size: 12px;
+      color: #8a8aaa;
+      border-top: 1px solid #eef0f8;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="badge">Lead Magnet · JO Consult</div>
+    <h1>Bikin Reel Otomatis<br>Pakai Remotion</h1>
+    <p>Panduan lengkap untuk online coach yang mau scale konten tanpa edit manual — satu template, ratusan video.</p>
+    <div class="brand-line">JO Consult × Mathew Jordan · 2026</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <div class="intro-box">
+      Kebanyakan coach stuck karena harus edit satu-satu. Remotion membalik logika ini: lo build template sekali, sistem yang generate ratusan video dari data yang lo kasih.
+    </div>
+
+    <!-- SECTION 1 -->
+    <h2>Apa itu Remotion?</h2>
+    <p>Remotion adalah tool yang bikin lo bisa <strong>render video pakai kode</strong> — bukan edit manual di CapCut atau Premiere. Lo nulis template sekali, lalu sistem yang generate video dari script yang lo kasih.</p>
+    <p>Untuk coach, artinya:</p>
+    <ul>
+      <li>Nggak perlu duduk edit tiap reel satu per satu</li>
+      <li>Tim lo bisa produce 30 reel sebulan dari 1 template</li>
+      <li>Perubahan visual? Ganti di satu file, semua video auto-update</li>
+    </ul>
+
+    <hr>
+
+    <!-- SECTION 2 -->
+    <h2>Yang Lo Butuhkan</h2>
+    <ul>
+      <li>Node.js terinstall (gratis — nodejs.org)</li>
+      <li>VS Code atau text editor apapun</li>
+      <li>Script reel yang sudah jadi (teks hook + isi + CTA)</li>
+      <li>Waktu setup awal: <strong>~2 jam</strong></li>
+    </ul>
+
+    <hr>
+
+    <!-- SECTION 3 -->
+    <h2>Step-by-Step Setup</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Install Remotion</h3>
+        <p>Buka terminal / command prompt, ketik:</p>
+        <div class="code-block">npx create-video@latest</div>
+        <p>Pilih template <strong>"Blank"</strong> untuk mulai dari nol, atau minta template yang sudah jadi dari tim lo.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Pahami Struktur Project</h3>
+        <div class="code-block">remotion-project/
+├── src/
+│   ├── Root.tsx       ← daftar semua video template
+│   ├── Reel.tsx       ← template visual reel lo
+│   └── index.ts
+├── public/            ← background video / gambar
+└── package.json</div>
+        <p>Yang paling penting: <span class="code-inline">Reel.tsx</span> — template visual yang dipakai untuk semua reel.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Buat Template Reel Sederhana</h3>
+        <p>Contoh template text-over-video (paling umum untuk coach content):</p>
+        <div class="code-block">// src/Reel.tsx
+import { AbsoluteFill, useCurrentFrame, interpolate } from 'remotion';
+
+export const Reel = ({ hook, body, cta }) => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame, [0, 20], [0, 1]);
+
+  return (
+    &lt;AbsoluteFill style={{ backgroundColor: '#000', padding: 60 }}&gt;
+      &lt;p style={{
+        color: 'white',
+        fontSize: 52,
+        fontWeight: 'bold',
+        opacity,
+        lineHeight: 1.3
+      }}&gt;
+        {hook}
+      &lt;/p&gt;
+    &lt;/AbsoluteFill&gt;
+  );
+};</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Masukkan Script Lo</h3>
+        <div class="code-block">&lt;Composition
+  id="Reel"
+  component={Reel}
+  durationInFrames={450}   // 15 detik di 30fps
+  fps={30}
+  width={1080}
+  height={1920}
+  defaultProps={{
+    hook: "3 kesalahan coach yang bikin klien kabur",
+    body: "Lo mungkin lakuin ini tanpa sadar...",
+    cta: "Comment 'SCRIPT' untuk template DM gratis"
+  }}
+/&gt;</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Preview di Browser</h3>
+        <div class="code-block">npm run preview</div>
+        <p>Buka <span class="code-inline">localhost:3000</span> — lo bisa lihat video real-time sambil edit teks.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h3>Render Jadi Video</h3>
+        <div class="code-block">npx remotion render Reel out/reel-01.mp4</div>
+        <p>Video MP4 siap upload ke IG / TikTok.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- SECTION 4: BATCH -->
+    <h2>Workflow Efisien: Batch Render dari Data</h2>
+    <p>Ini yang bikin Remotion beda dari edit manual. Lo bisa render 30 video sekaligus dari spreadsheet.</p>
+
+    <p><strong>1. Buat file <span class="code-inline">scripts.json</span>:</strong></p>
+    <div class="code-block">[
+  { "hook": "3 kesalahan coach baru", "body": "...", "cta": "..." },
+  { "hook": "Kenapa klien lo ghosting", "body": "...", "cta": "..." },
+  { "hook": "Formula DM yang closing", "body": "...", "cta": "..." }
+]</div>
+
+    <p><strong>2. Loop render dengan script Node.js:</strong></p>
+    <div class="code-block">node render-batch.js</div>
+    <p>Hasilnya: 30 file MP4 siap upload, dikerjain sistem — bukan lo.</p>
+
+    <hr>
+
+    <!-- SECTION 5: TEMPLATES -->
+    <h2>Template yang Sudah Terbukti</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Template</th>
+          <th>Kapan Dipakai</th>
+          <th>Durasi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Text Only (Bold)</strong></td><td>Hook kuat, statement</td><td>7–10 detik</td></tr>
+        <tr><td><strong>Text Over B-Roll</strong></td><td>Tips / value content</td><td>15–30 detik</td></tr>
+        <tr><td><strong>Split Screen</strong></td><td>Before/after, perbandingan</td><td>15–20 detik</td></tr>
+        <tr><td><strong>Talking Head + Caption</strong></td><td>Personal / authentic</td><td>30–60 detik</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <!-- LIMITATION -->
+    <h2>Batasan yang Perlu Lo Tau</h2>
+    <div class="callout">
+      <strong>Heads up:</strong> Remotion butuh sedikit comfort dengan kode. Kalau belum pernah coding sama sekali, ada learning curve ~1 minggu. Render juga butuh laptop yang cukup kuat, atau pakai cloud rendering. Template awal butuh effort setup — tapi setelah jadi, sistem yang kerja.
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <h3>Mau sistem ini jalan fully otomatis?</h3>
+      <p>Dari script text ke video siap upload — tanpa render manual, tanpa editor duduk seharian. Itu yang kami build untuk klien Bedah Digital.</p>
+      <span class="cta-pill">DM "SISTEM" ke Instagram kami</span>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    JO Consult × Mathew Jordan &nbsp;·&nbsp; Bedah Digital Program &nbsp;·&nbsp; 2026
+  </div>
+
+</div>
+</body>
+</html>

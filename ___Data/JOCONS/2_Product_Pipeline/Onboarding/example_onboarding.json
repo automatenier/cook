@@ -1,0 +1,43 @@
+{
+  "client_name": "Andi Pratama",
+  "client_instagram": "@andipratama.fit",
+  "client_email": "andi@example.com",
+  "client_phone": "+62812345678",
+
+  "avatar_type": "CEO/Exec (Pria 40+)",
+  "avatar_description": "CEO perusahaan tech di Jakarta, usia 45, jadwal padat, sering business travel",
+  "pain_point": "Penampilan — perut buncit, kurang percaya diri di meeting dan acara formal",
+  "dream_outcome": "Perut rata & rahang tajam dalam 90 hari, bisa pakai jas slim-fit dengan percaya diri di acara gala",
+  "roadblock": "Jadwal padat — meeting back-to-back, sering business travel, client dinners",
+
+  "program_name": "The High-Performance Physique System",
+  "training_style": "Biometric-Based Training (Oura/Apple Watch sync)",
+  "nutrition_approach": "Protein-First Intermittent Fasting",
+  "accountability": "Daily Performance Check-in (WhatsApp pagi sebelum meeting)",
+
+  "dfy_assets": [
+    "Grocery/Restaurant Solution (Go-Food Cheat Sheet + Shopping List)",
+    "Travel/Hotel Protocol (Airport Guide + Hotel Workout)",
+    "Nutrition Templates (Power Shake Menu + Plate Method)"
+  ],
+
+  "roadmap_approved": true,
+  "roadmap_custom": null,
+
+  "bonuses": [
+    {"name": "Sleep & Recovery Protocol", "value_usd": 500},
+    {"name": "Recovery Gear — Massage Gun Mini", "value_usd": 200},
+    {"name": "Monthly Maintenance Blueprint", "value_usd": 400}
+  ],
+
+  "guarantee_type": "Work Until You Win",
+  "guarantee_details": "Jika dalam 90 hari lingkar pinggang tidak turun sesuai target (meski 80% compliant), latih gratis sampai target tercapai",
+
+  "pricing": [
+    {"tier": "Pay-in-Full (VIP)", "price_idr": 35000000, "details": "One-time + Oura Ring gratis"},
+    {"tier": "Installment (Recommended)", "price_idr": 40500000, "details": "3x Rp 13.500.000 + akses VIP concierge"},
+    {"tier": "Ultra-Premium (Platinum)", "price_idr": 75000000, "details": "Personal visit 2x/bulan + custom meal planning"}
+  ],
+
+  "notes": "Andi sudah punya 3 klien online tapi belum punya offer sheet yang jelas. Ingin scale ke 10 klien high-ticket."
+}

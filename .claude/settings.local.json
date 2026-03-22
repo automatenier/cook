@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(dir:*)",
+      "Bash(pip list | grep -i gemini)",
+      "Bash(pip install google-genai)",
+      "Bash(pip search gemini 2>&1 | head -20 || pip install google-generativeai)",
+      "Bash(pip list | grep -i google)",
+      "WebSearch"
+    ]
+  }
+}

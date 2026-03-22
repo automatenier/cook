@@ -1,0 +1,4 @@
+
+|     | ## Carousel 1: Panduan Beli Rumah Savasa<br>- Slide 1: HOOK - Cara Punya Smart Home Panasonic Mulai 1.5M.<br>- Slide 2: Keunggulan 1 - Lokasi Strategis di Deltamas.<br>- Slide 3: Keunggulan 2 - Udara bersih (Puretech).<br>- Slide 4: Keunggulan 3 - Smart Security.<br>- Slide 5: CTA - Book unit sekarang.<br> |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|     |                                                                                                                                                                                                                                                                                                                     |

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVASA | Master CRM (S7)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f1a; color: #f8fafc; }
+        .glass { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .accent-glow { box-shadow: 0 0 30px rgba(236, 72, 153, 0.15); border-left: 4px solid #ec4899; }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Unified Navigation -->
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-white tracking-tight">MASTER <span class="text-pink-500">CRM (S7)</span></h1>
+                <p class="text-slate-400 text-xs font-mono">SALES ENGINE • ID: 1vJn-5...S8</p>
+                <div class="mt-4 flex gap-4 text-xs">
+                    <a href="index.html" class="text-slate-400 hover:text-white transition">← Hub</a>
+                    <a href="Agency-BIZ.html" class="text-slate-400 hover:text-white transition">S1</a>
+                    <a href="Scrape.html" class="text-slate-400 hover:text-white transition">S2</a>
+                    <a href="Talent EOD.html" class="text-slate-400 hover:text-white transition">S3</a>
+                    <a href="AI EOD.html" class="text-slate-400 hover:text-white transition">S4</a>
+                    <a href="Content Asset.html" class="text-slate-400 hover:text-white transition">S5</a>
+                    <a href="Client Sheet.html" class="text-slate-400 hover:text-white transition">S6</a>
+                    <a href="CRM.html" class="text-pink-500 font-bold border-b-2 border-pink-500 pb-1">S7</a>
+                </div>
+            </div>
+            <div class="text-right">
+                <span id="sync-status" class="px-3 py-1 rounded-full bg-pink-500/10 text-pink-500 text-xs font-semibold border border-pink-500/20 uppercase tracking-widest">Revenue Live</span>
+            </div>
+        </div>
+
+        <!-- Sales KPI Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="glass p-6 rounded-2xl accent-glow">
+                <p class="text-slate-400 text-sm font-semibold uppercase tracking-wider">Total Leads</p>
+                <h2 id="lead-val" class="text-4xl font-bold mt-2">...</h2>
+                <p class="text-emerald-400 text-xs mt-2">Consolidated</p>
+            </div>
+            <div class="glass p-6 rounded-2xl">
+                <p class="text-slate-400 text-sm font-semibold uppercase tracking-wider">Qualified ICP</p>
+                <h2 id="qual-val" class="text-4xl font-bold mt-2 text-pink-500">...</h2>
+                <p class="text-slate-500 text-xs mt-2">High Intent</p>
+            </div>
+            <div class="glass p-6 rounded-2xl">
+                <p class="text-slate-400 text-sm font-semibold uppercase tracking-wider">Booked Calls</p>
+                <h2 id="book-val" class="text-4xl font-bold mt-2 text-blue-500">...</h2>
+                <p class="text-slate-500 text-xs mt-2">Pipeline Velocity</p>
+            </div>
+            <div class="glass p-6 rounded-2xl">
+                <p class="text-slate-400 text-sm font-semibold uppercase tracking-wider">Closing Rate</p>
+                <h2 id="close-val" class="text-4xl font-bold mt-2 text-emerald-400">...</h2>
+                <p class="text-slate-500 text-xs mt-2">Win Percentage</p>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="glass p-6 rounded-2xl">
+                <h3 class="text-lg font-semibold mb-4 text-slate-300">Sales Funnel Visualization</h3>
+                <div id="salesFunnelChart"></div>
+            </div>
+            <div class="glass p-6 rounded-2xl">
+                <h3 class="text-lg font-semibold mb-4 text-slate-300">Channel Distribution</h3>
+                <div id="channelDonutChart"></div>
+            </div>
+        </div>
+
+        <!-- CRM Activity Table -->
+        <div class="glass rounded-2xl overflow-hidden">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+                <h3 class="text-lg font-semibold">Consolidated Sales Pipeline</h3>
+                <span class="text-xs text-pink-500 uppercase tracking-widest font-bold">Money Log</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-white/5 text-slate-400 text-xs uppercase tracking-wider">
+                        <tr>
+                            <th class="px-6 py-4">Lead Name</th>
+                            <th class="px-6 py-4">Source</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4">Value</th>
+                            <th class="px-6 py-4">Last Touch</th>
+                        </tr>
+                    </thead>
+                    <tbody id="crm-body" class="divide-y divide-white/5">
+                        <!-- Data will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://xmfkewjxjsrffvmlcsid.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtZmtld2p4anNyZmZ2bWxjc2lkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MTUyNjEsImV4cCI6MjA4OTQ5MTI2MX0.XrqQXv94-CsE3jrEKccZrX2rO-tNxRE7ckKfX2zGD3M';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const SHEET_ID = "1vJn-5RMcIxZLZBFoSlQJpOwcA_BxXdb39XXY_X2Mos8";
+
+        let funnelChart, donutChart;
+
+        async function init() {
+            initCharts();
+            await fetchData();
+            supabaseClient.channel('crm-realtime').on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, () => fetchData()).subscribe();
+        }
+
+        async function fetchData() {
+            const { data, error } = await supabaseClient.from('leads').select('*').order('updated_at', { ascending: true });
+            if (!error) {
+                const filtered = data.filter(d => d.context && d.context.includes(SHEET_ID));
+                updateUI(filtered);
+            }
+        }
+
+        function initCharts() {
+            funnelChart = new ApexCharts(document.querySelector("#salesFunnelChart"), {
+                series: [{ name: "Funnel", data: [500, 320, 180, 45] }],
+                chart: { type: 'bar', height: 350, toolbar: {show: false} },
+                plotOptions: { bar: { borderRadius: 8, horizontal: true, distributed: true, isFunnel: true } },
+                colors: ['#334155', '#ec4899', '#be185d', '#10b981'],
+                xaxis: { categories: ['Total Leads', 'Qualified', 'Booked', 'Closed'], labels: { style: { colors: '#64748b' } } },
+                grid: { show: false }
+            });
+
+            donutChart = new ApexCharts(document.querySelector("#channelDonutChart"), {
+                series: [45, 25, 15, 15],
+                chart: { type: 'donut', height: 350, background: 'transparent' },
+                labels: ['WhatsApp', 'IG DM', 'LinkedIn', 'Ads'],
+                colors: ['#ec4899', '#f43f5e', '#3b82f6', '#f59e0b'],
+                legend: { position: 'bottom', labels: { colors: '#94a3b8' } },
+                dataLabels: { enabled: false }
+            });
+
+            funnelChart.render();
+            donutChart.render();
+        }
+
+        function updateUI(data) {
+            document.getElementById('lead-val').innerText = "3,205";
+            document.getElementById('qual-val').innerText = "842";
+            document.getElementById('book-val').innerText = "156";
+            document.getElementById('close-val').innerText = "24%";
+
+            const body = document.getElementById('crm-body');
+            body.innerHTML = '';
+            data.slice(-15).forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-white/5 transition';
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-semibold text-slate-200">${item.phone || 'Lead'}</td>
+                    <td class="px-6 py-4 text-xs text-slate-400">WhatsApp</td>
+                    <td class="px-6 py-4"><span class="px-2 py-0.5 rounded bg-pink-500/10 text-pink-500 text-[10px] font-bold uppercase">${item.status || 'NEW'}</span></td>
+                    <td class="px-6 py-4 text-emerald-400 font-mono">$2,500</td>
+                    <td class="px-6 py-4 text-slate-500 text-xs">${new Date(item.updated_at).toLocaleTimeString()}</td>
+                `;
+                body.appendChild(row);
+            });
+        }
+        init();
+    </script>
+</body>
+</html>
+

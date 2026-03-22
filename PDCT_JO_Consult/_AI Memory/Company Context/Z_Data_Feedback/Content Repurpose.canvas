@@ -1,0 +1,8 @@
+{
+	"nodes":[
+		{"id":"483ae454e57f3ea0","x":-140,"y":-80,"width":225,"height":400,"type":"file","file":"Social Swipe/Social Media Format/Reels/Day1Challenge.mp4"},
+		{"id":"4ca99d13a13f243d","x":100,"y":-80,"width":250,"height":400,"type":"text","text":"Comment insight"},
+		{"id":"21b5038d6dd2ea91","x":-100,"y":-240,"width":250,"height":60,"type":"text","text":"Video yg posted, monitor"}
+	],
+	"edges":[]
+}

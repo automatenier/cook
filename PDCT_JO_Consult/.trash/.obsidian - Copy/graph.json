@@ -1,0 +1,30 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": true,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "tag:March",
+      "color": {
+        "a": 1,
+        "rgb": 14701138
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": 0.1,
+  "nodeSizeMultiplier": 0.866580041580042,
+  "lineSizeMultiplier": 1.35556133056133,
+  "collapse-forces": true,
+  "centerStrength": 0.687629937629938,
+  "repelStrength": 11.0459979209979,
+  "linkStrength": 1,
+  "linkDistance": 30,
+  "scale": 0.20404964444007961,
+  "close": true
+}

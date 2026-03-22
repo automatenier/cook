@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini Designer untuk Coach — JO Consult</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    }
+
+    .cover {
+      background: #1B3A6E;
+      padding: 56px 56px 48px;
+      color: #fff;
+    }
+
+    .cover .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .cover h1 {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .cover p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      max-width: 560px;
+    }
+
+    .cover .brand-line {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .body { padding: 48px 56px; }
+
+    .intro-box {
+      background: #f0f4ff;
+      border-left: 4px solid #1B3A6E;
+      padding: 20px 24px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 40px;
+      font-size: 15px;
+      color: #2d3a5e;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #1B3A6E;
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    p { font-size: 15px; color: #3a3a5c; margin-bottom: 14px; }
+
+    ul, ol { padding-left: 20px; margin-bottom: 16px; }
+    li { font-size: 15px; color: #3a3a5c; margin-bottom: 8px; }
+    li strong { color: #1a1a2e; }
+
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0 28px;
+    }
+
+    .use-case-card {
+      background: #f8f9ff;
+      border: 1px solid #dde2f5;
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+
+    .use-case-card .num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #1B3A6E;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .use-case-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+    }
+
+    .use-case-card p {
+      font-size: 13px;
+      color: #6a6a8a;
+      margin: 0;
+    }
+
+    .step { display: flex; gap: 16px; margin-bottom: 28px; align-items: flex-start; }
+
+    .step-num {
+      background: #1B3A6E;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-content { flex: 1; }
+    .step-content h3 { margin-top: 0; font-size: 16px; }
+
+    .prompt-block {
+      background: #111827;
+      color: #a5f3a5;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 20px 24px;
+      border-radius: 8px;
+      margin: 12px 0 20px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .prompt-block .label {
+      color: #6b7280;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .formula-box {
+      background: #f0f4ff;
+      border: 1px solid #c5d0f0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #1B3A6E;
+      margin: 12px 0 20px;
+    }
+
+    .code-inline {
+      background: #f0f4ff;
+      color: #1B3A6E;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+    thead tr { background: #1B3A6E; color: #fff; }
+    thead th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 13px; }
+    tbody tr:nth-child(even) { background: #f8f9ff; }
+    tbody tr:nth-child(odd)  { background: #fff; }
+    tbody td { padding: 11px 16px; color: #3a3a5c; border-bottom: 1px solid #eef0f8; }
+    tbody td strong { color: #1a1a2e; }
+
+    .brand-palette {
+      background: #f8f9ff;
+      border: 1px solid #dde2f5;
+      border-radius: 8px;
+      padding: 20px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #3a3a5c;
+      margin: 16px 0 24px;
+      line-height: 1.8;
+      white-space: pre;
+    }
+
+    .callout {
+      background: #fff8e6;
+      border: 1px solid #f5c842;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #5a4a00;
+    }
+
+    hr { border: none; border-top: 1px solid #eef0f8; margin: 40px 0; }
+
+    .cta-box {
+      background: #1B3A6E;
+      color: #fff;
+      padding: 36px 40px;
+      border-radius: 10px;
+      margin-top: 48px;
+      text-align: center;
+    }
+
+    .cta-box h3 { color: #fff; font-size: 20px; margin-bottom: 10px; }
+    .cta-box p  { color: rgba(255,255,255,0.75); font-size: 14px; margin-bottom: 20px; }
+
+    .cta-pill {
+      display: inline-block;
+      background: #fff;
+      color: #1B3A6E;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 28px;
+      border-radius: 30px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 24px 56px;
+      background: #f5f6fa;
+      font-size: 12px;
+      color: #8a8aaa;
+      border-top: 1px solid #eef0f8;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <div class="badge">Lead Magnet · JO Consult</div>
+    <h1>Gemini Designer<br>untuk Online Coach</h1>
+    <p>Cara bikin thumbnail, story template, dan visual konten pakai AI — tanpa bayar desainer, tanpa Photoshop.</p>
+    <div class="brand-line">JO Consult × Mathew Jordan · 2026</div>
+  </div>
+
+  <div class="body">
+
+    <div class="intro-box">
+      Lo punya konten bagus tapi visualnya biasa aja? Atau bayar desainer tapi lama dan mahal? Gemini Designer solve ini: lo describe apa yang lo mau, AI yang generate-nya.
+    </div>
+
+    <h2>Apa itu Gemini Designer?</h2>
+    <p>Gemini Designer adalah fitur di dalam <strong>Google Gemini</strong> (gemini.google.com) yang bisa generate gambar dari deskripsi teks, edit visual secara conversational, dan bikin mockup konten siap pakai.</p>
+    <p>Akses: <strong>Gratis</strong> di Gemini 2.0 Flash, lebih powerful di Gemini Advanced (berbayar).</p>
+
+    <hr>
+
+    <h2>5 Use Case Utama untuk Coach</h2>
+    <div class="use-case-grid">
+      <div class="use-case-card">
+        <div class="num">01</div>
+        <h4>Thumbnail YouTube</h4>
+        <p>Wajah + teks overlay eye-catching tanpa Photoshop.</p>
+      </div>
+      <div class="use-case-card">
+        <div class="num">02</div>
+        <h4>Story Background</h4>
+        <p>Latar belakang branded — warna dan tekstur sesuai tone.</p>
+      </div>
+      <div class="use-case-card">
+        <div class="num">03</div>
+        <h4>Quote Card</h4>
+        <p>Visual untuk quote dari konten lo, siap share di feed.</p>
+      </div>
+      <div class="use-case-card">
+        <div class="num">04</div>
+        <h4>Carousel Cover</h4>
+        <p>Slide pertama yang menarik perhatian di feed.</p>
+      </div>
+      <div class="use-case-card" style="grid-column: 1 / -1;">
+        <div class="num">05</div>
+        <h4>Mockup Lead Magnet</h4>
+        <p>Visual "digital product" untuk lead magnet lo — biar keliatan bernilai sebelum orang download.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>Step-by-Step</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Buka Gemini</h3>
+        <p>Pergi ke <strong>gemini.google.com</strong>, login dengan akun Google. Klik ikon gambar di input bar atau langsung ketik prompt.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Tulis Prompt yang Spesifik</h3>
+        <p><strong>Prompt buruk:</strong></p>
+        <div class="prompt-block">"Bikin thumbnail YouTube"</div>
+        <p><strong>Prompt bagus:</strong></p>
+        <div class="prompt-block">"Buat thumbnail YouTube 1280x720 dengan background gelap (navy blue), teks bold besar di sebelah kiri: '3 KESALAHAN FATAL', foto seseorang sedang memegang handphone dengan ekspresi serius di sebelah kanan. Style modern, clean, kontras tinggi."</div>
+        <p><strong>Formula:</strong></p>
+        <div class="formula-box">[Jenis visual] + [ukuran] + [warna/mood] + [elemen teks] + [elemen visual] + [style]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Iterate Secara Conversational</h3>
+        <p>Gemini bisa revisi tanpa mulai dari nol:</p>
+        <div class="prompt-block">"Bagus. Sekarang ubah warna teks jadi kuning,
+dan tambahkan garis horizontal merah di bawah judul."</div>
+        <div class="prompt-block">"Coba versi yang lebih minimalis — hapus background
+grafis, biarkan warna solid saja."</div>
+        <p>Iterate 5–10x dalam satu session sampai dapat yang paling cocok.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Export dan Polish</h3>
+        <p>Download hasil → buka di <strong>CapCut</strong> atau <strong>Canva</strong> untuk tambah logo, fine-tune font, dan resize untuk tiap platform.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>Prompt Templates Siap Pakai</h2>
+
+    <h3>Thumbnail YouTube</h3>
+    <div class="prompt-block">Buat thumbnail YouTube resolusi tinggi. Background warna [warna brand].
+Teks utama (bold, besar): "[JUDUL VIDEO]".
+Teks sekunder (lebih kecil): "[subtitle]".
+Tambahkan elemen visual: [ikon / foto / ilustrasi].
+Style: modern, high contrast, clean. Tidak ada stock photo feel.</div>
+
+    <h3>Story Background</h3>
+    <div class="prompt-block">Buat background Instagram Story 1080x1920.
+Warna dominan: [warna brand]. Tambahkan tekstur subtle [marble/grain/gradient].
+Sisakan ruang kosong di tengah untuk teks quote.
+Sudut kanan bawah: logo kecil "[nama brand]".
+Mood: [premium/minimalist/bold/warm].</div>
+
+    <h3>Cover Carousel</h3>
+    <div class="prompt-block">Buat slide pertama carousel Instagram 1080x1080.
+Judul: "[JUDUL KONTEN]" — font bold, ukuran besar.
+Subtitle: "[deskripsi singkat]".
+Background: [warna] dengan [elemen grafis].
+Tunjukkan angka atau janji yang jelas — "5 CARA", "3 LANGKAH".
+Style: clean, tidak crowded.</div>
+
+    <h3>Lead Magnet Mockup</h3>
+    <div class="prompt-block">Buat mockup digital product — terlihat seperti e-book atau PDF guide.
+Judul: "[NAMA LEAD MAGNET]".
+Cover: tampil di atas tablet atau laptop, angle sedikit miring (3D perspective).
+Background: putih bersih atau warna pastel [warna].
+Kesan: premium, valuable, professional.</div>
+
+    <hr>
+
+    <h2>Tips: Brand Palette Konsisten</h2>
+    <p>Sebelum mulai generate, tentukan brand palette lo dan paste di awal setiap sesi Gemini:</p>
+    <div class="brand-palette">Brand saya:
+- Warna utama : [hex code atau nama warna]
+- Warna aksen  : [hex code]
+- Mood         : [premium / grounded / bold / warm]
+- Font style   : [serif / sans-serif / bold]
+- Vibe         : [professional coach / street-smart / academic]</div>
+
+    <hr>
+
+    <h2>Limitation & Workaround</h2>
+    <table>
+      <thead>
+        <tr><th>Limitation</th><th>Workaround</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Tidak bisa upload foto diri untuk di-composite</td><td>Gabungkan di CapCut / Canva</td></tr>
+        <tr><td>Hasil kadang tidak 100% sempurna</td><td>Iterate 3–5x, pilih yang terbaik</td></tr>
+        <tr><td>Teks dalam gambar kadang salah eja</td><td>Hapus teks dari prompt, tambahkan manual</td></tr>
+        <tr><td>Belum bisa batch generate</td><td>Generate satu per satu, simpan ke folder</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h2>Workflow Efisien — 20 Menit dari Konten ke Visual</h2>
+    <ol>
+      <li>Script reel sudah jadi <em>(5 menit)</em></li>
+      <li>Generate thumbnail / cover di Gemini <em>(5 menit)</em></li>
+      <li>Polish di CapCut / Canva <em>(5 menit)</em></li>
+      <li>Upload ke GDrive / kirim ke editor <em>(2 menit)</em></li>
+      <li>Editor combine dengan footage → reel siap</li>
+    </ol>
+    <p>Total: visual siap tanpa freelancer desainer, tanpa tunggu 2 hari.</p>
+
+    <div class="cta-box">
+      <h3>Mau sistem visual konten lo jalan auto?</h3>
+      <p>Dari script ke visual ke upload terjadwal — Gemini untuk visual, Remotion untuk video, n8n untuk scheduling otomatis. Itu yang kami build untuk klien Bedah Digital.</p>
+      <span class="cta-pill">DM "VISUAL" ke Instagram kami</span>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    JO Consult × Mathew Jordan &nbsp;·&nbsp; Bedah Digital Program &nbsp;·&nbsp; 2026
+  </div>
+
+</div>
+</body>
+</html>

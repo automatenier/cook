@@ -1,0 +1,293 @@
+{
+  "main": {
+    "id": "a819c495843f0bee",
+    "type": "split",
+    "children": [
+      {
+        "id": "b6f309de15dc0f07",
+        "type": "tabs",
+        "dimension": 68.69369369369369,
+        "children": [
+          {
+            "id": "b3a0dfa3125daa18",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PDCT_Real_Estate/About brighton.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "About brighton"
+            }
+          }
+        ]
+      },
+      {
+        "id": "a49227f1f47a05b2",
+        "type": "tabs",
+        "dimension": 31.306306306306304,
+        "children": [
+          {
+            "id": "550b3c8a0df5bc04",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PDCT_JO_Consult/Guidelines/0_Brand_Guidelines/Brand Positioning.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Brand Positioning"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "32b888e04f22aa06",
+    "type": "split",
+    "children": [
+      {
+        "id": "1d8dc28f8ce8313d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f88970fe4cfe34a3",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "35cfa51b405d1471",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#SalesAI",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "3330cc2b7dd7d40e",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 294.5
+  },
+  "right": {
+    "id": "5d692a865039708e",
+    "type": "split",
+    "children": [
+      {
+        "id": "bca7a1871ae4e604",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "361bc52ee965ea25",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "fe45da979fd44f83",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "e8001c42342b5bc3",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "01 HMN__Command/Content Writing.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Content Writing"
+            }
+          },
+          {
+            "id": "4990f00089959ee0",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "01 HMN__Command/Content Writing.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Content Writing"
+            }
+          },
+          {
+            "id": "cea122687804e86e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "2791dcf7b5b39b49",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "e1474295edc52aa3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "PDCT_Real_Estate/About brighton.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of About brighton"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 309.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "templater-obsidian:Templater": false,
+      "obsidian-kanban:Create new board": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "obsidian-advanced-slides:Show Slide Preview": false,
+      "terminal:Open terminal": false,
+      "workspaces:Manage workspace layouts": false
+    }
+  },
+  "active": "f88970fe4cfe34a3",
+  "lastOpenFiles": [
+    "PDCT_JO_Consult/Agent_Product_Knowledge_SOP.md",
+    "PDCT_JO_Consult/README.md",
+    "_  AReadme/navigation.md",
+    "Untitled",
+    "_  AReadme/README.md",
+    "PDCT_JO_Consult/01 HMN__Command/Format Writing.md",
+    "PDCT_JO_Consult/01 HMN__Command/Daily Writing.md",
+    "PDCT_JO_Consult/01 HMN__Command/CTA_Product.md",
+    "PDCT_JO_Consult/01 HMN__Command/Content Writing.md",
+    "PDCT_JO_Consult/Content Compounds When Structured as Reusable Atoms.md",
+    "PDCT_Real_Estate/SAVASA Opportunity.md",
+    "PDCT_Real_Estate/SUMMARECON",
+    "PDCT_JO_Consult/Attachment.md",
+    "Z Attachment/Notes Attach/Steph Ango Note-Taking System.md",
+    "Z Attachment/Notes Attach",
+    "PDCT_JO_Consult/Greenscreen.md",
+    "PDCT_JO_ED/Notes.md",
+    "PDCT_JO_ED/README.md",
+    "PDCT_JO_Consult/March Content.md",
+    "Visuals EXcalidraw/Claude Teach me Cook.excalidraw",
+    "PDCT_JO_Consult/Guidelines/0_Brand_Guidelines/Brand Positioning.md",
+    "PDCT_Real_Estate/Writing_Workflow_SOP.md",
+    "PDCT_JO_Consult/Swipe Files/March/Social Format/daily-note.md",
+    "PDCT_JO_Consult/Gemini Teach me Cook.md",
+    "PDCT_JO_Consult/Guidelines/projects/2026-03/approved/March_2026_Sprint.md",
+    "PDCT_JO_ED/PDCT_MODULES/Content Compounds When Structured as Reusable Atoms.md",
+    "PDCT_JO_Consult/Swipe Files/InspirationSwipe/ObsAttachment/Pasted image 20260107211555.png",
+    "03_HMN_GUIDELINES/_template/A Swipe/Personal/DVQRYnVjr9l.mp4",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/unnamed (13).jpg",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/AuditPersonal.png",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/Frame 1000005479.png",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Footages",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/Frame 1000005479 (3).png",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/Frame 1000005480.png",
+    "PDCT_JO_Consult/March_Reels.md",
+    "PDCT_JO_Consult/March_Reel_Repurpose.md",
+    "PDCT_JO_Consult/Swipe Files/InspirationSwipe/ObsAttachment/Untitled.md",
+    "PDCT_JO_Consult/March_MD_Slides.md",
+    "PDCT_JO_Consult/01 HMN__Command/Daily_Note/Note Templates",
+    "PDCT_JO_Consult/Swipe Files/InspirationSwipe/Reels/Fitness/Woman/Transcript.mp4",
+    "PDCT_JO_Consult/Swipe Files/March",
+    "01_HMN_INPUTS/Visual_Swipe_Library.canvas",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/Rencanaskala.png",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/Pasted image 20260212171331.png",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/panduan.png",
+    "03_HMN_GUIDELINES/_template/A Swipe/Assets/Images/image 702.png",
+    "Untitled.canvas",
+    "Content/0 JOconsult/0.5 Swipe Canvas/Reels/1.canvas",
+    "Content/0 JOconsult/0 A Dashboard/Footage TO Take.canvas",
+    "Content/0 JOconsult/A Asset/Video/A-Roll/A-Roll Video Avatar.canvas",
+    "Content/0 JOconsult/A Asset/Video/C-Roll/C-Roll AI.canvas",
+    "Content/0 JOconsult/A Asset/Video/A-Roll/A-Roll Photo Avatar.canvas",
+    "Content/0 JOconsult/A Asset/Video/A-Roll/A-Roll Hook.canvas",
+    "Content/0 JOconsult/A Asset/Video/B-Roll/B-Roll Personality.canvas",
+    "Content/0 JOconsult/A Asset/Video/B-Roll/B-Roll Product.canvas"
+  ]
+}

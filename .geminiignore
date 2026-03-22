@@ -1,0 +1,44 @@
+# Core exclusions
+.git/
+.obsidian/
+.n8n/
+.tmp/
+node_modules/
+ZZ_ARCHIVE/
+__pycache__/
+
+# Large data/archives
+___Data/B Real Estate/
+___Data/Realestate/
+Z-AI_DATA_CONTENT/
+
+# Media
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wav
+*.mp3
+*.aac
+*.zip
+*.rar
+*.7z
+#*.png-temp
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+*.bmp
+*.pdf
+
+# Workspace artifacts
+.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+
+# Drafts
+Untitled.md
+Untitled.canvas
+temp_hook.md

@@ -1,0 +1,22 @@
+{
+  "cascadeColors": true,
+  "colorBackground": true,
+  "palette": [
+    {
+      "id": "Pl-lh_Yc5jbVne7zoQnJJ",
+      "name": "Daily",
+      "value": "#7563fd"
+    },
+    {
+      "id": "_2QojFL-ppILd8R-ZpP9X",
+      "name": "Clipping",
+      "value": "#dfea43"
+    }
+  ],
+  "fileColors": [
+    {
+      "path": "_b Clippings",
+      "color": "_2QojFL-ppILd8R-ZpP9X"
+    }
+  ]
+}

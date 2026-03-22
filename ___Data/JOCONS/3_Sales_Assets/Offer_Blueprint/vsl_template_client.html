@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Komunitas Busy Fit — Pelatihan Online untuk Ibu Sibuk</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Wistia VSL Scripts -->
+    <script src="https://fast.wistia.com/player.js" async></script>
+    <script src="https://fast.wistia.com/embed/9c05czsx0i.js" async type="module"></script>
+    <style>
+      wistia-player[media-id='9c05czsx0i']:not(:defined) { 
+        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/9c05czsx0i/swatch'); 
+        display: block; 
+        filter: blur(5px); 
+        padding-top: 56.25%; 
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#703a5e',
+              accent: '#b57ca1',
+              'background-light': '#ffffff',
+              'background-dark': '#0f0f0f'
+            },
+            fontFamily: {
+              display: ['Montserrat', 'sans-serif'],
+              script: ['Dancing Script', 'cursive']
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Plum gradient for buttons: Plum -> lighter Orchid */
+      .plum-btn { background: linear-gradient(90deg, #703a5e 0%, #c084cc 100%); }
+      .plum-outline { border: 2px solid; border-image: linear-gradient(90deg,#703a5e 0%,#c084cc 100%) 1; }
+
+      /* Fade-up animation */
+      .fade-up { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+      .is-visible { opacity: 1; transform: none; }
+
+      /* Transformation badge */
+      .trans-badge { width:50px; height:50px; border-radius:9999px; background:#000; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; position:absolute; right:10px; bottom:10px; font-size:12px; }
+
+      /* ensure big vertical spacing */
+      section { padding-top: 6rem; padding-bottom: 6rem; }
+
+      /* mobile friendly image pairs */
+      .photo-pair { position:relative; }
+
+      /* Accordion styles */
+      .accordion-item { border-bottom: 1px solid #e2e8f0; }
+      .accordion-header { color: #9D669E; font-weight: 700; cursor: pointer; padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
+      .accordion-header:hover { opacity: 0.8; }
+      .accordion-content { max-height: 0; overflow: hidden; transition: max-height .3s ease; color: #000000; }
+      .accordion-content.active { max-height: 500px; padding-bottom: 1.5rem; }
+
+      body { min-height:100svh; }
+
+      /* WhatsApp Button Fixed Position */
+      .wa-button {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: linear-gradient(90deg, #25D366 0%, #20BA58 100%);
+        color: white;
+        border-radius: 9999px;
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        font-weight: 700;
+        font-size: 0.875rem;
+        text-decoration: none;
+        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+        z-index: 40;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      .wa-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+      }
+
+      .wa-button svg {
+        width: 24px;
+        height: 24px;
+      }
+    </style>
+  </head>
+
+  <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+
+    <!-- Hero: Transparent nav, centered headline, plum buttons -->
+    <nav class="fixed inset-x-0 top-0 z-50 px-6 py-4 flex items-center justify-between bg-transparent">
+      <div class="flex items-center gap-3">
+        <span class="font-script text-2xl text-accent">Busy</span>
+        <span class="font-black text-lg tracking-tight uppercase">FIT</span>
+      </div>
+      <div class="flex items-center gap-4">
+      </div>
+    </nav>
+
+    <header class="relative text-white pt-28 pb-16 px-6" style="background-image: url('https://drive.google.com/thumbnail?id=1kAUGPHCEfeSj92NaMcyrYbJ-JIKULgoa&sz=w2000'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+      <!-- Testimonial overlay images (decorative) - distributed across hero -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+        <div class="absolute inset-0 bg-black/50"></div>
+      </div>
+
+      <div class="relative z-10">
+      <!-- Top messaging before VSL -->
+      <div class="text-center mb-8">
+        <h2 class="text-[26px] md:text-[28px] font-extrabold text-white mb-4">
+          Pelatihan Satu-Satu Eksklusif
+        </h2>
+        <p class="text-lg md:text-xl mb-8 text-slate-100">
+          <strong>Perhatian, wanita sibuk!</strong> Bakar lemak dan bangun kekuatan dengan hanya <strong>3 sesi latihan per minggu</strong>.
+        </p>
+      </div>
+
+      <!-- VSL Video Section -->
+      <div class="max-w-2xl mx-auto mb-12">
+        <div class="rounded-2xl overflow-hidden shadow-2xl">
+          <wistia-player media-id="9c05czsx0i" aspect="1.7777777777777777"></wistia-player>
+        </div>
+      </div>
+
+      <!-- Social Proof Tier -->
+      <div class="flex items-center justify-center gap-4 mb-12">
+        <div class="flex -space-x-3">
+          <!-- avatar images removed to use single hero background image -->
+        </div>
+        <span class="text-sm font-bold text-amber-300">+1000 Transformasi</span>
+      </div>
+
+      <!-- Branding & Title -->
+      <div class="text-center mb-6">
+        <div class="relative inline-block">
+          <h1 class="text-[38px] md:text-[38px] font-extrabold tracking-tight">
+            <span class="block">BUSY FIT</span>
+            <span class="block text-3xl md:text-4xl font-bold mt-2">Program Transformasi Anda</span>
+          </h1>
+        </div>
+        <div class="w-16 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
+      </div>
+
+      <!-- Messaging & CTA -->
+      <div class="max-w-2xl mx-auto text-center mb-8">
+        <p class="text-lg md:text-xl mb-6 text-slate-100">
+          Program Eksklusif kami menggabungkan pelatihan personal, nutrisi khusus, dan dukungan 24/7 untuk mengubah tubuh dan hidup Anda.
+        </p>
+        <a class="plum-btn inline-block px-10 py-4 rounded-xl text-white font-extrabold text-lg shadow-lg" href="#">Daftar Sekarang</a>
+      </div>
+
+      <!-- Benefit Bullets -->
+      <div class="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+        <div class="flex flex-col items-center">
+          <span class="text-primary font-bold text-2xl mb-2">✓</span>
+          <p class="text-sm text-slate-200">Program latihan & nutrisi yang dipersonalisasi</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-primary font-bold text-2xl mb-2">✓</span>
+          <p class="text-sm text-slate-200">Pemeriksaan check-in personal</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-primary font-bold text-2xl mb-2">✓</span>
+          <p class="text-sm text-slate-200">Pelatih khusus & dukungan 24/7</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto">
+
+      <!-- Agitation Section -->
+      <section class="bg-slate-900 text-white py-16">
+        <div class="max-w-3xl mx-auto px-4 text-center mb-12">
+          <h2 class="text-[24px] md:text-[24px] font-extrabold leading-tight">
+            Apakah Anda bosan <span class="text-accent">selalu harus memulai dari awal</span>, mencoba diet <span class="text-accent">yang tidak berhasil</span>, dan <span class="text-accent">bingung dengan semua informasi salah di internet?</span>
+          </h2>
+        </div>
+        <div class="max-w-2xl mx-auto px-4 space-y-6">
+          <div class="flex items-start gap-4">
+            <span class="text-red-500 font-extrabold text-3xl flex-shrink-0">✕</span>
+            <p class="text-lg text-slate-200">Anda sudah mencoba berkali-kali tetapi kurang kemauan untuk mempertahankannya</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <span class="text-red-500 font-extrabold text-3xl flex-shrink-0">✕</span>
+            <p class="text-lg text-slate-200">Anda ingin kehilangan 15–80 kg tetapi menolak hidup dengan pembatasan ketat</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <span class="text-red-500 font-extrabold text-3xl flex-shrink-0">✕</span>
+            <p class="text-lg text-slate-200">Anda lelah melakukan ini sendiri tanpa panduan atau akuntabilitas nyata</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <span class="text-red-500 font-extrabold text-3xl flex-shrink-0">✕</span>
+            <p class="text-lg text-slate-200">Anda merasa kewalahan, terjebak, dan tidak tahu harus mulai dari mana</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- The "Right Place" Affirmation -->
+      <section class="bg-slate-900 text-white py-16 px-4">
+        <div class="max-w-4xl mx-auto items-center gap-8 md:flex">
+          <div class="md:w-1/3 flex justify-center mb-8 md:mb-0">
+            <img src="https://drive.google.com/thumbnail?id=1QmfvEKSBwZ5OfWCVR9DZMYoxcTOdg_QQ&sz=w2000" alt="Jika ya" class="w-56 rounded-2xl shadow-lg object-cover">
+          </div>
+          <div class="md:w-2/3">
+            <h2 class="text-[26px] md:text-[26px] font-extrabold mb-6">Jika ya... Anda sudah datang ke tempat yang tepat.</h2>
+            <div class="w-12 h-1 bg-primary rounded-full mb-6"></div>
+            <p class="text-xl text-slate-300 mb-4"><strong>Kami telah membantu ribuan wanita</strong> dengan strategi jujur kami yang mudah diintegrasikan ke dalam kehidupan sibuk Anda.</p>
+            <p class="text-lg text-slate-300 mb-4">Pelatih Anda akan bekerja dengan Anda untuk membuat <strong class="text-accent">rencana yang dipersonalisasi</strong> yang disesuaikan dengan kebutuhan dan tujuan spesifik Anda, dan mereka akan memberikan <strong class="text-accent">dukungan dan bimbingan berkelanjutan</strong> untuk membantu Anda tetap di jalur yang benar dan membuat kemajuan.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Overlapping Image Hero with Storytelling -->
+      <section class="relative bg-slate-900 py-16 px-6" style="background-image: url('https://drive.google.com/thumbnail?id=1Ls3aVvksoyc0S4xPWhkQl5UNA26rLduW&sz=w2000'); background-size: cover; background-position: center; background-attachment: fixed;">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="max-w-5xl mx-auto relative z-10">
+
+          <!-- Typography Stack -->
+          <div class="text-center mt-8">
+            <p class="font-script text-accent text-3xl mb-3">Dukungan yang Anda butuhkan</p>
+            <h2 class="text-[24px] md:text-[24px] font-extrabold mb-6 leading-tight text-white">
+              Rasakan Kekuatan Dukungan 1-ke-1 dan Akuntabilitas dengan Pelatih Anda Sendiri
+            </h2>
+            <div class="w-16 h-1 bg-primary rounded-full mx-auto mb-8"></div>
+
+            <!-- Body Copy -->
+            <div class="max-w-3xl mx-auto text-center text-slate-100 space-y-6">
+              <p class="text-lg md:text-xl leading-relaxed">
+                Salah satu manfaat utama pelatihan kami adalah <strong class="text-white text-xl">kesempatan untuk bekerja satu-satu dengan pelatih</strong> yang berkomitmen pada kesuksesan Anda. Pelatih Anda akan meluangkan waktu untuk memahami kebutuhan dan tujuan unik Anda, dan akan membuat <strong class="text-white text-xl">rencana yang dipersonalisasi</strong> yang disesuaikan dengan Anda.
+              </p>
+              <p class="text-lg md:text-xl leading-relaxed">
+                Selain rencana yang dipersonalisasi, pelatih Anda akan memberikan <strong class="text-white text-xl">dukungan dan bimbingan berkelanjutan</strong> untuk membantu Anda tetap di jalur yang benar dan mencapai kemajuan menuju tujuan Anda. Mereka akan ada untuk menjawab pertanyaan, memberikan motivasi, dan membantu Anda mengatasi hambatan apa pun yang mungkin timbul dalam perjalanan Anda.
+              </p>
+              <p class="text-lg md:text-xl leading-relaxed font-semibold text-white">
+                Tingkat dukungan personal ini itulah yang membedakan pelatihan kami dari program kebugaran lainnya.
+              </p>
+            </div>
+
+            <!-- CTA Button -->
+            <div class="mt-10"><a class="plum-btn inline-block px-10 py-5 rounded-xl text-white font-extrabold text-lg shadow-lg hover:scale-105 transition-transform" href="#">Bergabung Sekarang</a></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Offer Plans: Two-card offer matching site style -->
+      <section class="py-16">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-12">
+            <h3 class="text-3xl md:text-4xl font-extrabold text-white mt-3">Pilih Paket Pelatihan Anda</h3>
+            <p class="text-slate-300 max-w-2xl mx-auto mt-4">Paket eksklusif kami dirancang untuk wanita sibuk.</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            <!-- Offer Card 1 -->
+            <div class="relative group h-[620px] overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 bg-slate-900">
+              <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(112,58,94,0.85) 0%, rgba(112,58,94,0.55) 40%, rgba(0,0,0,0.25) 100%);"></div>
+              </div>
+
+              <div class="relative z-10 h-full flex flex-col justify-end p-8 md:p-12">
+                <div class="absolute top-8 left-8">
+                  <span class="bg-accent text-white text-xs font-bold tracking-widest px-4 py-1.5 rounded-full uppercase shadow">Paling Populer</span>
+                </div>
+
+                <div class="space-y-6">
+                  <div>
+                    <h4 class="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight mb-3">1-On-1 Eksklusif<br/><span class="text-accent">Pelatihan Personal</span></h4>
+                    <p class="text-slate-200 text-lg max-w-md">Rencana sepenuhnya disesuaikan, dukungan pelatih, dan check-in mingguan untuk hasil nyata yang bertahan lama.</p>
+                  </div>
+
+                  <ul class="space-y-3 text-white">
+                    <li class="flex items-center gap-3"><span class="material-icons text-accent">check_circle</span><span>Latihan & nutrisi yang dipersonalisasi</span></li>
+                    <li class="flex items-center gap-3"><span class="material-icons text-accent">check_circle</span><span>Check-in mingguan & penyesuaian</span></li>
+                    <li class="flex items-center gap-3"><span class="material-icons text-accent">check_circle</span><span>Akses prioritas pelatih</span></li>
+                  </ul>
+
+                  <div>
+                    <a class="plum-btn inline-block px-8 py-4 rounded-xl text-white font-extrabold text-lg shadow-lg" href="#">Gabung Sekarang</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Offer Card 2 -->
+            <div class="relative group h-[620px] overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 bg-slate-900 border border-white/5">
+              <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(112,58,94,0.75) 0%, rgba(112,58,94,0.45) 40%, rgba(0,0,0,0.2) 100%);"></div>
+              </div>
+
+              <div class="relative z-10 h-full flex flex-col justify-end p-8 md:p-12">
+                <div class="space-y-6">
+                  <div>
+                    <h4 class="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight mb-3">365 Transformasi<br/><span class="text-accent">Pendekatan Jangka Panjang</span></h4>
+                    <p class="text-slate-200 text-lg max-w-md">Program berkelanjutan fokus pada kebiasaan yang dapat dipertahankan, meal plan, dan komunitas pendukung.</p>
+                  </div>
+
+                  <ul class="space-y-3 text-white">
+                    <li class="flex items-center gap-3"><span class="material-icons text-accent">check_circle</span><span>Program progresif & template latihan</span></li>
+                    <li class="flex items-center gap-3"><span class="material-icons text-accent">check_circle</span><span>Resep & panduan nutrisi praktis</span></li>
+                    <li class="flex items-center gap-3"><span class="material-icons text-accent">check_circle</span><span>Akses komunitas & sesi mingguan</span></li>
+                  </ul>
+
+                  <div>
+                    <a class="inline-block px-8 py-4 rounded-xl text-white font-extrabold text-lg border-2 border-accent hover:bg-accent/90 transition-all shadow-lg" href="#">Pelajari Lebih Lanjut</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Proven Method Feature Grid -->
+      <section class="bg-slate-900 py-16">
+        <div class="max-w-5xl mx-auto px-6">
+          <div class="text-center mb-12">
+            <p class="font-script text-3xl text-accent mb-2">Dukungan yang Anda Butuhkan</p>
+            <h3 class="text-[24px] md:text-[24px] font-extrabold text-white">Metode yang Terbukti</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card 1: Training -->
+            <div class="relative bg-slate-800 border border-purple-600/40 rounded-2xl p-8 pt-12">
+              <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
+                <span class="material-icons text-slate-900 text-3xl">fitness_center</span>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Program Latihan Progresif</h4>
+              <p class="text-slate-300 text-sm leading-relaxed">Latihan yang menantang dirancang untuk memastikan kemajuan berkelanjutan dan kenaikan kekuatan. Setiap sesi dibangun di atas yang sebelumnya.</p>
+            </div>
+
+            <!-- Card 2: Nutrition -->
+            <div class="relative bg-slate-800 border border-purple-600/40 rounded-2xl p-8 pt-12">
+              <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
+                <span class="material-icons text-slate-900 text-3xl">restaurant</span>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Protokol Nutrisi</h4>
+              <p class="text-slate-300 text-sm leading-relaxed">Informasi yang terbukti secara ilmiah tentang cara makan lebih banyak sambil menurunkan berat badan. Tanpa BS, tanpa kelaparan.</p>
+            </div>
+
+            <!-- Card 3: Coaching -->
+            <div class="relative bg-slate-800 border border-purple-600/40 rounded-2xl p-8 pt-12">
+              <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
+                <span class="material-icons text-slate-900 text-3xl">school</span>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Pelatihan Satu-Satu</h4>
+              <p class="text-slate-300 text-sm leading-relaxed">Rencana yang dipersonalisasi disesuaikan dengan kebutuhan dan tujuan Anda untuk membuat Anda tetap di jalur yang benar setiap minggu.</p>
+            </div>
+
+            <!-- Card 4: Calls -->
+            <div class="relative bg-slate-800 border border-purple-600/40 rounded-2xl p-8 pt-12">
+              <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
+                <span class="material-icons text-slate-900 text-3xl">video_call</span>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Panggilan Pelatihan Langsung</h4>
+              <p class="text-slate-300 text-sm leading-relaxed">Panggilan Zoom grup mingguan yang mencakup kebugaran, nutrisi, dan pola pikir dengan seluruh komunitas Anda.</p>
+            </div>
+
+            <!-- Card 5: Meals -->
+            <div class="relative bg-slate-800 border border-purple-600/40 rounded-2xl p-8 pt-12">
+              <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
+                <span class="material-icons text-slate-900 text-3xl">favorite</span>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Rencana Makanan yang Dipersonalisasi</h4>
+              <p class="text-slate-300 text-sm leading-relaxed">Rencana khusus yang mencakup makanan favorit Anda. Keberlanjutan adalah segalanya.</p>
+            </div>
+
+            <!-- Card 6: Accountability -->
+            <div class="relative bg-slate-800 border border-purple-600/40 rounded-2xl p-8 pt-12">
+              <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
+                <span class="material-icons text-slate-900 text-3xl">people</span>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Akuntabilitas</h4>
+              <p class="text-slate-300 text-sm leading-relaxed">Check-in 3x per minggu dan akses komunitas Facebook untuk membuat Anda tetap terhubung dan termotivasi.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Transformation Gallery: Results-Driven Gallery -->
+      <section class="bg-slate-900 py-16">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-12">
+            <h3 class="text-[24px] md:text-[24px] font-extrabold text-white mb-4">Lihat beberapa transformasi sukses kami</h3>
+            <p class="text-xl text-slate-300">dari wanita seperti ANDA!</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Card 1 -->
+            <div class="photo-pair relative overflow-hidden rounded-xl shadow-xl bg-black">
+              <img src="https://drive.google.com/thumbnail?id=1x4jlicOLP73wdNZhHUHwxcEj6aWQ-nyk&sz=w2000" alt="Transformasi" class="w-full h-96 object-cover">
+              <div class="absolute bottom-3 right-3 bg-black text-white px-3 py-2 rounded-lg text-xs font-bold">8 MINGGU<br>3x/minggu</div>
+            </div>
+            <!-- Card 2 -->
+            <div class="photo-pair relative overflow-hidden rounded-xl shadow-xl bg-black">
+              <img src="https://drive.google.com/thumbnail?id=1x4jlicOLP73wdNZhHUHwxcEj6aWQ-nyk&sz=w2000" alt="Transformasi" class="w-full h-96 object-cover">
+              <div class="absolute bottom-3 right-3 bg-black text-white px-3 py-2 rounded-lg text-xs font-bold">12 MINGGU<br>3x/minggu</div>
+            </div>
+            <!-- Card 3 -->
+            <div class="photo-pair relative overflow-hidden rounded-xl shadow-xl bg-black">
+              <img src="https://drive.google.com/thumbnail?id=1x4jlicOLP73wdNZhHUHwxcEj6aWQ-nyk&sz=w2000" alt="Transformasi" class="w-full h-96 object-cover">
+              <div class="absolute bottom-3 right-3 bg-black text-white px-3 py-2 rounded-lg text-xs font-bold">16 MINGGU<br>3x/minggu</div>
+            </div>
+            <!-- Card 4 -->
+            <div class="photo-pair relative overflow-hidden rounded-xl shadow-xl bg-black">
+              <img src="https://drive.google.com/thumbnail?id=1x4jlicOLP73wdNZhHUHwxcEj6aWQ-nyk&sz=w2000" alt="Transformasi" class="w-full h-96 object-cover">
+              <div class="absolute bottom-3 right-3 bg-black text-white px-3 py-2 rounded-lg text-xs font-bold">10 MINGGU<br>3x/minggu</div>
+            </div>
+            <!-- Card 5 -->
+            <div class="photo-pair relative overflow-hidden rounded-xl shadow-xl bg-black">
+              <img src="https://drive.google.com/thumbnail?id=1x4jlicOLP73wdNZhHUHwxcEj6aWQ-nyk&sz=w2000" alt="Transformasi" class="w-full h-96 object-cover">
+              <div class="absolute bottom-3 right-3 bg-black text-white px-3 py-2 rounded-lg text-xs font-bold">14 WEEKS<br>3x/week</div>
+            </div>
+            <!-- Card 6 -->
+            <div class="photo-pair relative overflow-hidden rounded-xl shadow-xl bg-black">
+              <img src="https://drive.google.com/thumbnail?id=1x4jlicOLP73wdNZhHUHwxcEj6aWQ-nyk&sz=w2000" alt="Transformasi" class="w-full h-96 object-cover">
+              <div class="absolute bottom-3 right-3 bg-black text-white px-3 py-2 rounded-lg text-xs font-bold">9 WEEKS<br>3x/week</div>
+            </div>
+            <!-- Card 7 -->
+            <div class="photo-pair relative overflow-hidden rounded-xl shadow-xl bg-black">
+              <img src="https://drive.google.com/thumbnail?id=1x4jlicOLP73wdNZhHUHwxcEj6aWQ-nyk&sz=w2000" alt="Transformasi" class="w-full h-96 object-cover">
+              <div class="absolute bottom-3 right-3 bg-black text-white px-3 py-2 rounded-lg text-xs font-bold">20 WEEKS<br>3x/week</div>
+            </div>
+            <!-- Card 8 -->
+            <div class="photo-pair relative overflow-hidden rounded-xl shadow-xl bg-black">
+              <img src="https://drive.google.com/thumbnail?id=1x4jlicOLP73wdNZhHUHwxcEj6aWQ-nyk&sz=w2000" alt="Transformasi" class="w-full h-96 object-cover">
+              <div class="absolute bottom-3 right-3 bg-black text-white px-3 py-2 rounded-lg text-xs font-bold">15 WEEKS<br>3x/week</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Readiness Checklist -->
+      <section class="bg-slate-100 dark:bg-slate-900">
+        <div class="max-w-3xl mx-auto px-4">
+          <h3 class="text-[26px] md:text-[26px] font-extrabold mb-8">Jika Anda siap untuk akhirnya memiliki...</h3>
+          <ul class="space-y-4 text-lg text-slate-800 dark:text-slate-200 mb-10">
+            <li class="flex items-start gap-3">
+              <span class="text-primary font-bold text-2xl">✓</span>
+              <span>Bimbingan yang dipersonalisasi dari pelatih ahli yang benar-benar peduli</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary font-bold text-2xl">✓</span>
+              <span>Pemeriksaan rutin dan akuntabilitas yang membuat Anda tetap di jalur yang benar</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary font-bold text-2xl">✓</span>
+              <span>Saran nutrisi ahli yang disesuaikan dengan gaya hidup dan keluarga Anda</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary font-bold text-2xl">✓</span>
+              <span>Komunitas wanita yang mendukung yang menghancurkan tujuan mereka</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-primary font-bold text-2xl">✓</span>
+              <span>Latihan khusus yang sesuai dengan hidup nyata Anda, bukan hanya fantasi Instagram</span>
+            </li>
+          </ul>
+          <div class="bg-slate-900 dark:bg-slate-950 p-8 rounded-2xl text-center">
+            <a class="plum-btn inline-block px-8 py-4 rounded-xl text-white font-bold text-lg" href="#">Daftar Sekarang</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- The Final Push -->
+      <section class="relative h-96 md:h-[500px] flex items-center justify-center overflow-hidden" style="background-image: linear-gradient(135deg, rgba(112, 58, 94, 0.6) 0%, rgba(181, 124, 161, 0.4) 100%), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;">
+        <div class="relative z-10 text-center text-white max-w-2xl px-6">
+          <h2 class="text-[24px] md:text-[24px] font-extrabold mb-6">Apa Yang Anda Tunggu?</h2>
+          <p class="text-lg md:text-xl mb-8">Ambil alih kesehatan Anda hari ini. Berhenti menunggu momen yang sempurna—itu adalah sekarang. Bergabunglah dengan ratusan wanita sibuk yang telah mengubah hidup mereka.</p>
+          <a class="inline-block bg-slate-900 hover:bg-slate-800 text-white px-12 py-5 rounded-xl font-extrabold text-lg transition-all" href="#">Jadilah Versi Terbaik Anda</a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="text-center">
+        <div class="text-center mb-12">
+          <p class="font-script text-3xl text-accent">Pertanyaan</p>
+          <h3 class="text-3xl font-extrabold mt-2">Yang Mungkin Anda Tanyakan...</h3>
+        </div>
+        <div class="max-w-3xl mx-auto px-4">
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Uang ketat, mengapa harus berinvestasi?</span>
+              <span class="material-icons">expand_more</span>
+            </div>
+            <div class="accordion-content">
+              <p>Pikirkan ini sebagai pencegahan daripada pengobatan. Investasi kecil sekarang pada kesehatan Anda menghemat ribuan pada tagihan medis dan menetapkan fondasi untuk vitalitas seumur hidup. Plus paket fleksibel kami membuatnya terjangkau.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Saya telah gagal di kebugaran sebelumnya.</span>
+              <span class="material-icons">expand_more</span>
+            </div>
+            <div class="accordion-content">
+              <p>Itulah alasan kami ada. Kami tidak percaya pada "motivasi" — kami membangun sistem. Pendekatan kami berfokus pada kebiasaan kecil yang bertambah. Sebagian besar klien kami tidak fit selama bertahun-tahun, dan mereka sekarang sedang menghancurkannya.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Berapa banyak waktu yang dibutuhkan ini?</span>
+              <span class="material-icons">expand_more</span>
+            </div>
+            <div class="accordion-content">
+              <p>Latihan 15–25 menit, 10 menit untuk perencanaan makanan. Itu saja. Kami dirancang untuk kehidupan sibuk, bukan influencer Instagram. Hasil nyata pada jadwal nyata.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Apakah ini hanya aplikasi lain?</span>
+              <span class="material-icons">expand_more</span>
+            </div>
+            <div class="accordion-content">
+              <p>Tidak. Aplikasi adalah kendaraannya, tetapi Anda mendapatkan pelatihan, komunitas, dan akuntabilitas. Anda tidak sendiri dalam kekosongan — Anda adalah bagian dari gerakan wanita yang memahaminya.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Bagaimana jika tidak berhasil untuk saya?</span>
+              <span class="material-icons">expand_more</span>
+            </div>
+            <div class="accordion-content">
+              <p>Kami menawarkan jaminan 30 hari. Jika Anda tidak melihat kemajuan atau merasa didukung, kami mengembalikan dana Anda sepenuhnya. Kami percaya diri karena kami telah melihat ini berhasil ratusan kali.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="text-center py-16 px-6">
+        <div class="max-w-3xl mx-auto">
+          <h3 class="text-[24px] font-extrabold">Siap bergabung dengan komunitas?</h3>
+          <p class="mt-4 text-slate-600">Mulai kecil. Bangun kebiasaan yang konsisten. Ubah untuk selamanya.</p>
+          <div class="mt-6"><a class="plum-btn inline-block px-8 py-4 rounded-xl text-white font-bold" href="#">Bergabung Sekarang</a></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer with Social Icons Only -->
+    <footer class="relative bg-cover bg-center text-white py-8" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80');">
+      <div class="absolute inset-0 bg-black/80"></div>
+      <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+        <div class="flex items-center justify-center gap-8">
+          <a href="#" class="text-slate-300 hover:text-accent transition" aria-label="Instagram">
+            <span class="material-icons text-4xl">camera_alt</span>
+          </a>
+          <a href="#" class="text-slate-300 hover:text-accent transition" aria-label="YouTube">
+            <span class="material-icons text-4xl">play_circle</span>
+          </a>
+          <a href="#" class="text-slate-300 hover:text-accent transition" aria-label="TikTok">
+            <span class="material-icons text-4xl">videocam</span>
+          </a>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-700 text-slate-400 text-xs">
+          <p>© 2026 Busy Fit. Semua hak dilindungi.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp Fixed Button -->
+    <a href="https://api.whatsapp.com/send?phone=15551598512&text=halo%20apa%20yang%20bisa%20jo%20consult%20bantu%20untuk%20karir%20online%20konsultan%20saya%3F" class="wa-button" target="_blank" rel="noopener noreferrer">
+      <span>Konsultasi via WA</span>
+    </a>
+
+    <script>
+      // simple reveal on scroll
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      },{threshold:0.12});
+      document.querySelectorAll('[data-reveal]').forEach(el=>{ el.classList.add('fade-up'); io.observe(el); });
+      // also reveal other sections
+      document.querySelectorAll('section').forEach(s=>{ if(!s.hasAttribute('data-reveal')){ s.classList.add('fade-up'); io.observe(s); } });
+
+      // accordion toggle
+      function toggleAccordion(header) {
+        const content = header.nextElementSibling;
+        const isActive = content.classList.contains('active');
+        document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.accordion-header span:last-child').forEach(icon => icon.textContent = 'expand_more');
+        if (!isActive) {
+          content.classList.add('active');
+          header.querySelector('span:last-child').textContent = 'expand_less';
+        }
+      }
+    </script>
+    <script>
+      (function(){
+        const target = 'https://sites.google.com/view/busyfitdaftar/fullpage';
+        // Redirect all <button> clicks to the signup URL
+        document.querySelectorAll('button').forEach(btn=>{
+          btn.addEventListener('click', ()=> { window.location.href = target; });
+        });
+        // Update placeholder anchors that use href="#" to the signup URL
+        document.querySelectorAll('a[href="#"]').forEach(a=> a.setAttribute('href', target));
+      })();
+    </script>
+  </body>
+</html>
