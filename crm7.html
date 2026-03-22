@@ -145,21 +145,36 @@
         }
 
         function updateUI(data) {
-            document.getElementById('lead-val').innerText = "3,205";
-            document.getElementById('qual-val').innerText = "842";
-            document.getElementById('book-val').innerText = "156";
+            // Calculate real metrics from Supabase data
+            const totalLeads = data.length;
+            
+            // For now, these are dummy logic but using the live count for totalLeads
+            // You can further refine this by parsing item.context if you have status columns
+            document.getElementById('lead-val').innerText = totalLeads.toLocaleString();
+            document.getElementById('qual-val').innerText = Math.floor(totalLeads * 0.26).toLocaleString();
+            document.getElementById('book-val').innerText = Math.floor(totalLeads * 0.05).toLocaleString();
             document.getElementById('close-val').innerText = "24%";
 
             const body = document.getElementById('crm-body');
             body.innerHTML = '';
-            data.slice(-15).forEach(item => {
+            
+            // Show the last 15 most recently updated leads
+            data.slice(-15).reverse().forEach(item => {
+                let context = {};
+                try { context = JSON.parse(item.context); } catch(e) {}
+                const rowData = context.row_data || {};
+                
+                // Try to find a source and value from the row data
+                const source = rowData['Source'] || rowData['Lead Source'] || context.tab_name || 'Direct';
+                const value = rowData['Value'] || rowData['Deal Value'] || '$2,500';
+
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-white/5 transition';
                 row.innerHTML = `
                     <td class="px-6 py-4 font-semibold text-slate-200">${item.phone || 'Lead'}</td>
-                    <td class="px-6 py-4 text-xs text-slate-400">WhatsApp</td>
+                    <td class="px-6 py-4 text-xs text-slate-400">${source}</td>
                     <td class="px-6 py-4"><span class="px-2 py-0.5 rounded bg-pink-500/10 text-pink-500 text-[10px] font-bold uppercase">${item.status || 'NEW'}</span></td>
-                    <td class="px-6 py-4 text-emerald-400 font-mono">$2,500</td>
+                    <td class="px-6 py-4 text-emerald-400 font-mono">${value}</td>
                     <td class="px-6 py-4 text-slate-500 text-xs">${new Date(item.updated_at).toLocaleTimeString()}</td>
                 `;
                 body.appendChild(row);
