@@ -4,17 +4,26 @@ import requests
 import os
 import json
 import csv
+import threading
 from datetime import datetime, date
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
 # --- CONFIGURATION ---
 GEMINI_BOT_TOKEN = os.getenv("GEMINI_BOT_TOKEN") 
 API_URL = f"https://api.telegram.org/bot{GEMINI_BOT_TOKEN}/"
+FILE_URL = f"https://api.telegram.org/file/bot{GEMINI_BOT_TOKEN}/"
 
 # Paths
 ROOT = Path(__file__).resolve().parent.parent
 LEAD_LOG = ROOT / "___Data" / "A JOCONS" / "lead_attribution.csv"
 STATE_FILE = ROOT / ".tmp" / "gemini_remote_state.json"
+UPLOAD_DIR = ROOT / ".tmp" / "telegram_uploads"
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+# Global executor for background tasks
+executor = ThreadPoolExecutor(max_workers=4)
+active_tasks = {} # chat_id -> future
 
 # --- HELPERS ---
 def send_message(chat_id, text):
@@ -31,71 +40,100 @@ def send_message(chat_id, text):
 
 def update_message(chat_id, message_id, text):
     try:
+        # Telegram limit is 4096 chars. If text is longer, we truncate or append.
+        if len(text) > 4000:
+            text = text[:3900] + "\n... (truncated, see full output below)"
+            
         url = API_URL + "editMessageText"
         payload = {"chat_id": chat_id, "message_id": message_id, "text": text}
         response = requests.post(url, data=payload)
-        if response.status_code != 200:
-            print(f"Error editing message: {response.text}")
+        return response.json()
     except Exception as e:
         print(f"Error editing message: {e}")
+        return None
 
 def get_updates(offset=None):
     try:
         url = API_URL + "getUpdates"
-        params = {"timeout": 30, "offset": offset}
+        params = {"timeout": 20, "offset": offset}
         response = requests.get(url, params=params)
         return response.json()
     except Exception as e:
         print(f"Error getting updates: {e}")
         return None
 
-def run_gemini_command(prompt, chat_id=None, msg_id=None):
-    """Executes the gemini cli command with the prompt, optimized for speed and reliability."""
+def download_file(file_id, dest_name):
     try:
-        # Using the absolute path to gemini.cmd for Windows stability
+        # Get file path
+        res = requests.get(API_URL + "getFile", params={"file_id": file_id}).json()
+        if not res.get("ok"): return None
+        
+        file_path = res["result"]["file_path"]
+        download_url = FILE_URL + file_path
+        
+        dest_path = UPLOAD_DIR / dest_name
+        r = requests.get(download_url, stream=True)
+        with open(dest_path, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+        return dest_path
+    except Exception as e:
+        print(f"Error downloading file: {e}")
+        return None
+
+def run_gemini_command_worker(prompt, chat_id, status_msg_id, resume=True, attachment_path=None):
+    """Executes the gemini cli command with real-time feedback."""
+    try:
         gemini_path = r"C:\Users\natha\AppData\Roaming\npm\gemini.cmd"
         
-        # -p: Prompt (non-interactive)
-        # -y: Auto-approve all tools (YOLO)
-        # -r latest: Resume session to save context and speed up startup
-        cmd = [gemini_path, "-p", prompt, "-y", "-r", "latest"]
+        # Build command
+        cmd = [gemini_path, "-p", prompt, "-y"]
+        if resume:
+            cmd += ["-r", "latest"]
         
-        print(f"Executing: {' '.join(cmd)}")
+        if attachment_path:
+            # We assume the CLI can take a path as part of the prompt or as a separate arg
+            # Based on standard usage, we append the path to the command
+            cmd.append(str(attachment_path))
+            
+        print(f"[{chat_id}] Executing: {' '.join(cmd)}")
         
-        # Start the process
         process = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             encoding='utf-8',
-            shell=True
+            shell=True,
+            bufsize=1
         )
         
-        # Collect output while it runs
         full_output = []
+        last_update_time = time.time()
         start_time = time.time()
-        last_update = time.time()
         
+        # Process output in real-time
         while True:
-            # Check for timeout (5 mins)
-            if time.time() - start_time > 300:
-                process.kill()
-                return "⚠️ Task timed out (took > 5 minutes)."
-                
-            # Read stdout
             line = process.stdout.readline()
             if line:
                 full_output.append(line)
-                # Every 10 seconds, update the user with progress
-                if chat_id and msg_id and time.time() - last_update > 10:
-                    update_message(chat_id, msg_id, f"⚡ Still processing... ({int(time.time() - start_time)}s elapsed)")
-                    last_update = time.time()
+                # Update Telegram every 3 seconds to avoid rate limits but stay snappy
+                if time.time() - last_update_time > 3:
+                    current_text = "".join(full_output).strip()
+                    if current_text:
+                        update_message(chat_id, status_msg_id, f"⚡ GEMINI RUNNING...\n\n{current_text[-3500:]}")
+                    else:
+                        update_message(chat_id, status_msg_id, f"⚡ Still processing... ({int(time.time() - start_time)}s)")
+                    last_update_time = time.time()
             
-            # Check if process finished
             if line == '' and process.poll() is not None:
                 break
-        
+                
+            if time.time() - start_time > 600: # 10 min timeout
+                process.kill()
+                update_message(chat_id, status_msg_id, "⚠️ Task timed out (10 mins).")
+                return
+
         stdout, stderr = process.communicate()
         if stdout: full_output.append(stdout)
         
@@ -103,10 +141,21 @@ def run_gemini_command(prompt, chat_id=None, msg_id=None):
         if not result and stderr:
             result = f"❌ Error: {stderr.strip()}"
             
-        return result if result else "✅ Task completed (no output)."
+        final_text = result if result else "✅ Task completed."
         
+        # Final update
+        if len(final_text) <= 4000:
+            update_message(chat_id, status_msg_id, final_text)
+        else:
+            update_message(chat_id, status_msg_id, "✅ Task completed. See output below:")
+            for i in range(0, len(final_text), 4000):
+                send_message(chat_id, final_text[i:i+4000])
+                
     except Exception as e:
-        return f"❌ System Error: {str(e)}"
+        send_message(chat_id, f"❌ System Error: {str(e)}")
+    finally:
+        if chat_id in active_tasks:
+            del active_tasks[chat_id]
 
 # --- STATE MANAGEMENT ---
 def load_state():
@@ -122,52 +171,34 @@ def save_state(state):
 
 # --- MONITORING LOGIC ---
 def check_leads(chat_id, state):
-    if not LEAD_LOG.exists():
-        return state
-
+    if not LEAD_LOG.exists(): return state
     try:
         with open(LEAD_LOG, "r", encoding="utf-8") as f:
             lines = list(csv.DictReader(f))
             current_count = len(lines)
-            
             if current_count > state["last_lead_count"]:
                 new_leads = lines[state["last_lead_count"]:]
                 for lead in new_leads:
                     priority = "🚨 HIGH PRIORITY" if "high" in lead.get("notes", "").lower() or "high" in lead.get("status", "").lower() else "🆕 New Lead"
                     msg = f"{priority} ALERT!\nName: {lead['lead_name']}\nSource: {lead['source']}\nStatus: {lead['status']}\nNotes: {lead['notes']}"
                     send_message(chat_id, msg)
-                
                 state["last_lead_count"] = current_count
                 save_state(state)
     except Exception as e:
         print(f"Error checking leads: {e}")
     return state
 
-def check_daily_summary(chat_id, state):
-    now = datetime.now()
-    today_str = str(date.today())
-    
-    if now.hour >= 20 and state["last_summary_date"] != today_str:
-        print(f"Generating Daily Summary for {today_str}...")
-        summary = run_gemini_command("Generate a summary of today's work, including new leads and content processed.")
-        send_message(chat_id, f"📅 DAY RECAP ({today_str}):\n\n{summary}")
-        
-        state["last_summary_date"] = today_str
-        save_state(state)
-    return state
-
 # --- MAIN LOOP ---
 def main():
     if not GEMINI_BOT_TOKEN:
-        print("CRITICAL: GEMINI_BOT_TOKEN not found. Set it in your environment or the script.")
+        print("CRITICAL: GEMINI_BOT_TOKEN not found.")
         return
 
     state = load_state()
-    
     if state["authorized_chat_id"]:
-        send_message(state["authorized_chat_id"], "Gemini Exhibition Bridge is LIVE! Send me any command to vibe code from your phone.")
+        send_message(state["authorized_chat_id"], "🚀 Gemini Remote 2.0 is LIVE!\n\n- Multimodal support (send photos!)\n- Real-time streaming output\n- Async task execution\n- Use /reset to clear context")
 
-    print("Gemini Exhibition Bridge is LIVE. Listening for Telegram commands...")
+    print("Gemini Remote 2.0 is LIVE. Listening...")
     last_update_id = None
     last_check_time = time.time()
 
@@ -176,56 +207,70 @@ def main():
         if updates and "result" in updates:
             for update in updates["result"]:
                 last_update_id = update["update_id"] + 1
-                if "message" in update and "text" in update["message"]:
-                    chat_id = update["message"]["chat"]["id"]
-                    user_text = update["message"]["text"]
-                    
-                    if state["authorized_chat_id"] is None:
-                        if user_text == "/start":
-                            state["authorized_chat_id"] = chat_id
-                            save_state(state)
-                            send_message(chat_id, "🔓 Access Granted. You are now the Admin of this Gemini Instance.")
-                        else:
-                            send_message(chat_id, "🔒 Unauthorized. Send /start to claim this bot.")
-                        continue
-                    
-                    if chat_id != state["authorized_chat_id"]:
-                        send_message(chat_id, "⛔ Unauthorized. Access Denied.")
-                        continue
+                
+                # Extract message info
+                msg = update.get("message")
+                if not msg: continue
+                
+                chat_id = msg["chat"]["id"]
+                user_text = msg.get("text", "")
+                photo = msg.get("photo")
+                document = msg.get("document")
+                
+                # Auth
+                if state["authorized_chat_id"] is None:
+                    if user_text == "/start":
+                        state["authorized_chat_id"] = chat_id
+                        save_state(state)
+                        send_message(chat_id, "🔓 Access Granted. Admin assigned.")
+                    continue
+                
+                if chat_id != state["authorized_chat_id"]:
+                    send_message(chat_id, "⛔ Unauthorized.")
+                    continue
 
-                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Received: {user_text}")
-                    
-                    if user_text.lower() == "/status":
-                        send_message(chat_id, f"✅ Online. Current Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\nLeads Tracked: {state['last_lead_count']}")
-                    else:
-                        # Send initial status and get message ID
-                        status_msg = send_message(chat_id, f"⚡ Gemini Processing: \"{user_text}\"...")
-                        status_msg_id = status_msg['result']['message_id'] if status_msg and 'result' in status_msg else None
-                        
-                        response = run_gemini_command(user_text, chat_id, status_msg_id)
-                        
-                        # Delete the status message or update it
-                        if status_msg_id:
-                            # We'll send the response and try to edit the original message if it's short, 
-                            # or just leave it and send new messages if it's long.
-                            if len(response) <= 4000:
-                                update_message(chat_id, status_msg_id, response if response else "✅ Task completed.")
-                            else:
-                                update_message(chat_id, status_msg_id, "✅ Task completed. See output below:")
-                                for i in range(0, len(response), 4000):
-                                    send_message(chat_id, response[i:i+4000])
-                        else:
-                            # Fallback if we couldn't get status_msg_id
-                            for i in range(0, len(response), 4000):
-                                send_message(chat_id, response[i:i+4000])
+                # Commands
+                if user_text == "/status":
+                    send_message(chat_id, f"✅ Online. {len(active_tasks)} tasks running.")
+                    continue
+                
+                if user_text == "/reset":
+                    status_msg = send_message(chat_id, "🧹 Resetting session (starting fresh)...")
+                    executor.submit(run_gemini_command_worker, "Hello, start fresh.", chat_id, status_msg['result']['message_id'], resume=False)
+                    continue
 
-        if time.time() - last_check_time > 300: # 5 minutes
+                # Handle Input (Text or Photo)
+                attachment_path = None
+                prompt = user_text
+                
+                if photo:
+                    # Get largest photo
+                    file_id = photo[-1]["file_id"]
+                    attachment_path = download_file(file_id, f"photo_{int(time.time())}.jpg")
+                    prompt = msg.get("caption", "Analyze this image.")
+                    send_message(chat_id, f"📸 Image received. Downloaded to {attachment_path.name}")
+                elif document:
+                    file_id = document["file_id"]
+                    fname = document.get("file_name", f"doc_{int(time.time())}")
+                    attachment_path = download_file(file_id, fname)
+                    prompt = msg.get("caption", "Analyze this document.")
+                    send_message(chat_id, f"📄 Document received: {fname}")
+
+                if prompt or attachment_path:
+                    status_msg = send_message(chat_id, f"⚡ Gemini: \"{prompt[:50]}...\"")
+                    if status_msg:
+                        msg_id = status_msg['result']['message_id']
+                        active_tasks[chat_id] = executor.submit(
+                            run_gemini_command_worker, prompt, chat_id, msg_id, True, attachment_path
+                        )
+
+        # Periodic checks
+        if time.time() - last_check_time > 300:
             if state["authorized_chat_id"]:
                 state = check_leads(state["authorized_chat_id"], state)
-                state = check_daily_summary(state["authorized_chat_id"], state)
             last_check_time = time.time()
-
-        time.sleep(1)
+        
+        time.sleep(0.1) # Fast loop for responsiveness
 
 if __name__ == "__main__":
     main()

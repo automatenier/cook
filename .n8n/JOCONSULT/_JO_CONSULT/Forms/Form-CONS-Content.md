@@ -1,5 +1,0 @@
----
-tags:
-  - consulting
----
-strat & Asset

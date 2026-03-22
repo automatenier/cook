@@ -21,7 +21,8 @@ def create_breakdown(video_path, output_dir, notebook_id=None):
     # 1. Extract Frames with ffmpeg
     print("--- Extracting Frames ---")
     frame_pattern = assets_dir / "scene_%03d.jpg"
-    ffmpeg_cmd = f'ffmpeg -i "{video_path}" -filter:v "select=\'gt(scene,0.4)\',showinfo" -fps_mode vfr -strict unofficial "{frame_pattern}"'
+    # Added mpdecimate to remove near-duplicates and increased scene threshold to 0.2
+    ffmpeg_cmd = f'ffmpeg -i "{video_path}" -filter:v "mpdecimate,select=\'gt(scene,0.2)\',showinfo" -vsync vfr "{frame_pattern}"'
     run_command(ffmpeg_cmd)
     
     # 2. Generate Canvas

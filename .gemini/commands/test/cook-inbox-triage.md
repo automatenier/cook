@@ -1,1 +1,0 @@
-Route everything in HMN_A INPUTS to correct vertical. Arguments: $ARGUMENTS. Follow the workflow in .agents/workflows/cook-inbox-triage.md.
