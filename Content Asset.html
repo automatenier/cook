@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVASA | Production Control (S5)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #05070a; color: #f8fafc; }
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .accent-gradient { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .stage-badge { @apply px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body class="p-6 md:p-10 min-h-screen">
+    <div class="max-w-[1600px] mx-auto">
+        
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 rounded-xl accent-gradient flex items-center justify-center shadow-lg shadow-amber-500/20">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h1 class="text-3xl font-extrabold tracking-tight text-white">PRODUCTION <span class="text-amber-500">OS</span></h1>
+                </div>
+                <p class="text-slate-500 text-sm font-medium flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    CONTENT PIPELINE (S5) • April 2026 Strategy
+                </p>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="flex bg-slate-900/50 p-1 rounded-xl border border-white/5">
+                    <button onclick="setBrand('all')" id="btn-all" class="px-4 py-2 rounded-lg text-sm font-semibold transition active-brand">All Brands</button>
+                    <button onclick="setBrand('Real Estate')" id="btn-re" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition">Real Estate</button>
+                    <button onclick="setBrand('JO Consult')" id="btn-joc" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition">JO Consult</button>
+                </div>
+                <a href="https://docs.google.com/spreadsheets/d/1ryyHlW8m_7pla68VLp8wXkpnPmj6uX8DxyICjN4cqGQ/edit" target="_blank" class="glass px-4 py-2 rounded-xl text-sm font-bold text-amber-500 hover:bg-amber-500/10 transition border-amber-500/20">
+                    Open Sheet ↗
+                </a>
+                <div id="sync-status" class="px-4 py-2 rounded-xl bg-slate-900/80 border border-white/5 text-xs font-bold uppercase tracking-widest text-slate-500">
+                    Syncing...
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <div class="glass p-6 rounded-3xl relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition"></div>
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-1">In Pipeline</p>
+                <h2 id="total-val" class="text-5xl font-black text-white">0</h2>
+                <div class="mt-4 flex items-center text-xs text-amber-500 font-bold">
+                    <span>Active Assets</span>
+                </div>
+            </div>
+            <div class="glass p-6 rounded-3xl relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition"></div>
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-1">Production</p>
+                <h2 id="prod-val" class="text-5xl font-black text-blue-500">0</h2>
+                <div class="mt-4 flex items-center text-xs text-blue-400/60 font-medium">
+                    <span>Drafting to Editing</span>
+                </div>
+            </div>
+            <div class="glass p-6 rounded-3xl relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-rose-500/5 rounded-full blur-2xl group-hover:bg-rose-500/10 transition"></div>
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-1">Bottlenecks</p>
+                <h2 id="stale-val" class="text-5xl font-black text-rose-500">0</h2>
+                <div class="mt-4 flex items-center text-xs text-rose-400/60 font-medium">
+                    <span>Overdue Assets</span>
+                </div>
+            </div>
+            <div class="glass p-6 rounded-3xl relative overflow-hidden group border-emerald-500/20">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition"></div>
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-1">Ready/Live</p>
+                <h2 id="live-val" class="text-5xl font-black text-emerald-400">0</h2>
+                <div class="mt-4 flex items-center text-xs text-emerald-400 font-bold">
+                    <span>Rendered & Posted</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left: Table (2/3) -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="glass rounded-3xl overflow-hidden shadow-2xl">
+                    <div class="px-8 py-6 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
+                        <h3 class="text-lg font-bold flex items-center gap-2">
+                            Production Queue
+                            <span id="brand-badge" class="px-2 py-0.5 rounded-md bg-white/5 text-[10px] text-slate-400 uppercase">All</span>
+                        </h3>
+                        <div class="flex gap-2">
+                             <input type="text" id="search" placeholder="Search assets..." class="bg-black/40 border border-white/10 rounded-lg px-4 py-1.5 text-xs focus:outline-none focus:border-amber-500/50 w-48">
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="bg-white/[0.01] text-slate-500 text-[10px] font-black uppercase tracking-widest border-b border-white/5">
+                                    <th class="px-8 py-5">ID / Brand</th>
+                                    <th class="px-8 py-5">Content Title</th>
+                                    <th class="px-8 py-5">Status Stage</th>
+                                    <th class="px-8 py-5">Editor</th>
+                                    <th class="px-8 py-5">Due</th>
+                                </tr>
+                            </thead>
+                            <tbody id="content-body" class="divide-y divide-white/5">
+                                <!-- Data Injected Here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="empty-state" class="hidden p-20 text-center">
+                        <p class="text-slate-500 font-medium">No assets found for this filter.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Analytics (1/3) -->
+            <div class="space-y-8">
+                <div class="glass p-8 rounded-3xl">
+                    <h3 class="text-lg font-bold mb-6 text-slate-200 uppercase tracking-wider text-sm">Stage Distribution</h3>
+                    <div id="stageChart"></div>
+                </div>
+
+                <div class="glass p-8 rounded-3xl">
+                    <h3 class="text-lg font-bold mb-6 text-slate-200 uppercase tracking-wider text-sm">Platform Mix</h3>
+                    <div id="platformChart"></div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass p-4 rounded-2xl hover:bg-white/5 transition cursor-pointer group">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">New Script</p>
+                        <p class="text-sm font-bold text-white group-hover:text-amber-500 transition">Create MD</p>
+                    </div>
+                    <div class="glass p-4 rounded-2xl hover:bg-white/5 transition cursor-pointer group">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Render</p>
+                        <p class="text-sm font-bold text-white group-hover:text-blue-500 transition">Remotion UI</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API = "http://localhost:3456/api/content-calendar";
+        let rawData = [];
+        let currentBrand = 'all';
+        let stageChart, platformChart;
+
+        async function init() {
+            initCharts();
+            await fetchData();
+            setInterval(fetchData, 60000);
+            
+            document.getElementById('search').addEventListener('input', renderUI);
+        }
+
+        async function fetchData() {
+            try {
+                const resp = await fetch(API);
+                if (!resp.ok) throw new Error();
+                rawData = await resp.json();
+                renderUI();
+                updateStatus("Live", "text-emerald-500");
+            } catch (e) {
+                updateStatus("⚠ Offline", "text-rose-500");
+            }
+        }
+
+        function updateStatus(text, cls) {
+            const el = document.getElementById("sync-status");
+            el.textContent = text;
+            el.className = `px-4 py-2 rounded-xl bg-slate-900/80 border border-white/5 text-xs font-bold uppercase tracking-widest ${cls}`;
+        }
+
+        function setBrand(brand) {
+            currentBrand = brand;
+            ['btn-all', 'btn-re', 'btn-joc'].forEach(id => {
+                document.getElementById(id).className = "px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition";
+            });
+            const activeId = brand === 'all' ? 'btn-all' : (brand === 'Real Estate' ? 'btn-re' : 'btn-joc');
+            document.getElementById(activeId).className = "px-4 py-2 rounded-lg text-sm font-semibold bg-white/10 text-white transition";
+            document.getElementById('brand-badge').textContent = brand;
+            renderUI();
+        }
+
+        function initCharts() {
+            stageChart = new ApexCharts(document.querySelector("#stageChart"), {
+                series: [{ name: 'Assets', data: [0, 0, 0, 0, 0] }],
+                chart: { type: 'bar', height: 300, toolbar: {show: false} },
+                plotOptions: { bar: { horizontal: true, borderRadius: 6, barHeight: '60%' } },
+                colors: ['#f59e0b'],
+                xaxis: { categories: ['Idea', 'Script', 'Filming', 'Edit', 'Live'], labels: { style: { colors: '#64748b' } } },
+                grid: { borderColor: 'rgba(255,255,255,0.05)', strokeDashArray: 4 },
+                dataLabels: { enabled: false }
+            });
+
+            platformChart = new ApexCharts(document.querySelector("#platformChart"), {
+                series: [44, 55, 13],
+                chart: { type: 'donut', height: 250 },
+                labels: ['TikTok', 'Instagram', 'Other'],
+                colors: ['#f59e0b', '#3b82f6', '#10b981'],
+                stroke: { show: false },
+                legend: { position: 'bottom', labels: { colors: '#94a3b8' } },
+                dataLabels: { enabled: false }
+            });
+
+            stageChart.render();
+            platformChart.render();
+        }
+
+        function renderUI() {
+            const search = document.getElementById('search').value.toLowerCase();
+            
+            // Filter Data (Prefer 'Production Pipeline' tab if multiple exist)
+            let filtered = rawData.filter(d => d.tab === "Production Pipeline");
+            if (filtered.length === 0) filtered = rawData; // Fallback to whatever data is there
+
+            if (currentBrand !== 'all') {
+                filtered = filtered.filter(d => d.brand === currentBrand);
+            }
+            if (search) {
+                filtered = filtered.filter(d => 
+                    (d.title || '').toLowerCase().includes(search) || 
+                    (d.id || '').toLowerCase().includes(search)
+                );
+            }
+
+            // Update KPIs
+            document.getElementById('total-val').textContent = filtered.length;
+            document.getElementById('prod-val').textContent = filtered.filter(d => (d.stage || '').toLowerCase().includes('edit') || (d.stage || '').toLowerCase().includes('film')).length;
+            document.getElementById('live-val').textContent = filtered.filter(d => (d.stage || '').toLowerCase().includes('post') || (d.stage || '').toLowerCase().includes('live')).length;
+            document.getElementById('stale-val').textContent = filtered.filter(d => (d.priority || '').toLowerCase() === 'high' && !(d.stage || '').toLowerCase().includes('post')).length;
+
+            // Render Table
+            const body = document.getElementById('content-body');
+            body.innerHTML = '';
+            
+            if (filtered.length === 0) {
+                document.getElementById('empty-state').classList.remove('hidden');
+            } else {
+                document.getElementById('empty-state').classList.add('hidden');
+                filtered.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.className = "hover:bg-white/[0.02] transition cursor-pointer";
+                    
+                    const stage = (item.stage || 'Idea').trim();
+                    let stageColor = "bg-slate-500/10 text-slate-400";
+                    if (stage.toLowerCase().includes('post') || stage.toLowerCase().includes('live')) stageColor = "bg-emerald-500/10 text-emerald-400";
+                    if (stage.toLowerCase().includes('edit') || stage.toLowerCase().includes('progress')) stageColor = "bg-blue-500/10 text-blue-400";
+                    if (stage.toLowerCase().includes('film')) stageColor = "bg-amber-500/10 text-amber-400";
+                    if (stage.toLowerCase().includes('draft') || stage.toLowerCase().includes('script')) stageColor = "bg-purple-500/10 text-purple-400";
+
+                    row.innerHTML = `
+                        <td class="px-8 py-5">
+                            <div class="text-[10px] font-black text-slate-500 mb-0.5">${item.id || 'N/A'}</div>
+                            <div class="text-[10px] font-bold text-amber-500/80 uppercase">${item.brand || 'Personal'}</div>
+                        </td>
+                        <td class="px-8 py-5">
+                            <div class="text-sm font-bold text-slate-200">${item.title || 'Untitled Asset'}</div>
+                            <div class="text-[10px] text-slate-500 mt-0.5">${item.topic || 'General'} • ${item.platform || 'Multi'}</div>
+                        </td>
+                        <td class="px-8 py-5">
+                            <span class="px-2 py-1 rounded-md text-[9px] font-black uppercase tracking-tighter ${stageColor}">${stage}</span>
+                        </td>
+                        <td class="px-8 py-5 text-xs font-semibold text-slate-400">${item.editor || '—'}</td>
+                        <td class="px-8 py-5 text-xs font-medium text-slate-500">${item.due_date || '—'}</td>
+                    `;
+                    body.appendChild(row);
+                });
+            }
+
+            // Update Charts
+            const stages = ['Idea', 'Script', 'Film', 'Edit', 'Post'];
+            const stageCounts = stages.map(s => filtered.filter(d => (d.stage || '').toLowerCase().includes(s.toLowerCase())).length);
+            stageChart.updateSeries([{ data: stageCounts }]);
+
+            const platforms = ['TikTok', 'Instagram', 'LinkedIn', 'YouTube'];
+            const platformCounts = platforms.map(p => filtered.filter(d => (d.platform || '').toLowerCase().includes(p.toLowerCase())).length);
+            platformChart.updateOptions({ labels: platforms });
+            platformChart.updateSeries(platformCounts);
+        }
+
+        init();
+    </script>
+</body>
+</html>

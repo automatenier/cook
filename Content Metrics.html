@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVASA | Content Metrics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f1a; color: #f8fafc; }
+        .glass { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .tab-btn { transition: all 0.2s; }
+        .tab-btn.active { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24; }
+        .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body class="p-6">
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex justify-between items-end mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">CONTENT <span class="text-amber-500">METRICS</span></h1>
+            <p class="text-slate-400 text-xs font-mono">Content Production Pipeline • SAVASA</p>
+        </div>
+        <div class="text-right">
+            <span id="sync-status" class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20 uppercase tracking-widest">Connecting...</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-2 mb-6 flex-wrap">
+        <button class="tab-btn px-4 py-2 rounded-xl border border-white/10 text-sm font-semibold text-slate-400 active" data-tab="activity">📊 Daily Activity</button>
+        <button class="tab-btn px-4 py-2 rounded-xl border border-white/10 text-sm font-semibold text-slate-400" data-tab="pipeline">🎬 Production Pipeline</button>
+        <button class="tab-btn px-4 py-2 rounded-xl border border-white/10 text-sm font-semibold text-slate-400" data-tab="inspiration">💡 Inspiration</button>
+    </div>
+
+    <!-- ── Daily Activity Tab ── -->
+    <div id="tab-activity" class="tab-content">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="glass p-5 rounded-2xl">
+                <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Inbox Checked</p>
+                <h2 id="kpi-inbox" class="text-3xl font-bold mt-1 text-blue-400">—</h2>
+                <p class="text-slate-500 text-[10px] mt-1">today</p>
+            </div>
+            <div class="glass p-5 rounded-2xl">
+                <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider">New Convos</p>
+                <h2 id="kpi-convo" class="text-3xl font-bold mt-1 text-pink-400">—</h2>
+                <p class="text-slate-500 text-[10px] mt-1">today</p>
+            </div>
+            <div class="glass p-5 rounded-2xl">
+                <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Follow-ups Sent</p>
+                <h2 id="kpi-fu" class="text-3xl font-bold mt-1 text-emerald-400">—</h2>
+                <p class="text-slate-500 text-[10px] mt-1">today</p>
+            </div>
+            <div class="glass p-5 rounded-2xl">
+                <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Hours Worked</p>
+                <h2 id="kpi-hours" class="text-3xl font-bold mt-1 text-amber-400">—</h2>
+                <p class="text-slate-500 text-[10px] mt-1">today</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="glass p-5 rounded-2xl">
+                <h3 class="text-sm font-semibold text-slate-300 mb-3">Calls & Bookings</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">Calls Proposed</span><span id="kpi-calls-prop" class="text-white font-bold">—</span></div>
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">Calls Booked</span><span id="kpi-calls-booked" class="text-blue-400 font-bold">—</span></div>
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">Qualified Bookings</span><span id="kpi-qualified" class="text-emerald-400 font-bold">—</span></div>
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">Unqualified Bookings</span><span id="kpi-unqualified" class="text-red-400 font-bold">—</span></div>
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">ICP Leads Today</span><span id="kpi-icp" class="text-pink-400 font-bold">—</span></div>
+                </div>
+            </div>
+            <div class="glass p-5 rounded-2xl">
+                <h3 class="text-sm font-semibold text-slate-300 mb-3">Convo Nurture & Situations</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">Convos Nurtured</span><span id="kpi-nurture" class="text-amber-400 font-bold">—</span></div>
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">Calls on Calendar</span><span id="kpi-cal" class="text-white font-bold">—</span></div>
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">Calls Showed</span><span id="kpi-showed" class="text-emerald-400 font-bold">—</span></div>
+                    <div class="flex justify-between items-center"><span class="text-slate-400 text-xs">Sets Closed</span><span id="kpi-sets" class="text-pink-400 font-bold">—</span></div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-white/5">
+                    <p class="text-slate-400 text-[10px] uppercase tracking-wider mb-1">Latest Note</p>
+                    <p id="kpi-note" class="text-slate-300 text-xs italic">—</p>
+                </div>
+            </div>
+        </div>
+        <!-- Activity Log -->
+        <div class="glass rounded-2xl overflow-hidden">
+            <div class="p-4 border-b border-white/10 bg-white/5">
+                <h3 class="text-sm font-semibold text-slate-300">Daily Activity Log</h3>
+            </div>
+            <div class="overflow-x-auto max-h-64 overflow-y-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-white/5 text-slate-500 uppercase tracking-wider sticky top-0">
+                        <tr>
+                            <th class="px-4 py-3 font-semibold">Date</th>
+                            <th class="px-4 py-3 font-semibold">Inbox</th>
+                            <th class="px-4 py-3 font-semibold">New Convo</th>
+                            <th class="px-4 py-3 font-semibold">FU Sent</th>
+                            <th class="px-4 py-3 font-semibold">Calls Prop.</th>
+                            <th class="px-4 py-3 font-semibold">Calls Booked</th>
+                            <th class="px-4 py-3 font-semibold">ICP Leads</th>
+                            <th class="px-4 py-3 font-semibold">Hours</th>
+                            <th class="px-4 py-3 font-semibold">Note</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activity-body" class="divide-y divide-white/5">
+                        <tr><td colspan="9" class="px-4 py-6 text-center text-slate-600">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Production Pipeline Tab ── -->
+    <div id="tab-pipeline" class="tab-content hidden">
+        <div class="glass rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-sm font-semibold text-slate-300">Content Production Status</h3>
+                <span class="text-xs text-amber-500">← Fill in Content Asset sheet to populate</span>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="glass p-4 rounded-xl text-center">
+                    <p class="text-slate-400 text-xs uppercase tracking-wider">Ideas</p>
+                    <p id="stage-ideas" class="text-3xl font-bold mt-1 text-slate-400">—</p>
+                </div>
+                <div class="glass p-4 rounded-xl text-center">
+                    <p class="text-slate-400 text-xs uppercase tracking-wider">Scripts</p>
+                    <p id="stage-scripts" class="text-3xl font-bold mt-1 text-amber-400">—</p>
+                </div>
+                <div class="glass p-4 rounded-xl text-center">
+                    <p class="text-slate-400 text-xs uppercase tracking-wider">In Edit</p>
+                    <p id="stage-edit" class="text-3xl font-bold mt-1 text-rose-400">—</p>
+                </div>
+                <div class="glass p-4 rounded-xl text-center">
+                    <p class="text-slate-400 text-xs uppercase tracking-wider">Published</p>
+                    <p id="stage-pub" class="text-3xl font-bold mt-1 text-emerald-400">—</p>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-white/5 text-slate-500 uppercase tracking-wider">
+                        <tr>
+                            <th class="px-4 py-3 font-semibold">Title</th>
+                            <th class="px-4 py-3 font-semibold">Platform</th>
+                            <th class="px-4 py-3 font-semibold">Stage</th>
+                            <th class="px-4 py-3 font-semibold">Due Date</th>
+                            <th class="px-4 py-3 font-semibold">Editor</th>
+                            <th class="px-4 py-3 font-semibold">Hook</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pipeline-body">
+                        <tr><td colspan="6" class="px-4 py-8 text-center text-slate-600">No production data yet — add rows to your Content Asset sheet (Tracker tab)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Inspiration Tab ── -->
+    <div id="tab-inspiration" class="tab-content hidden">
+        <div class="glass rounded-2xl overflow-hidden">
+            <div class="p-4 border-b border-white/10 bg-white/5">
+                <h3 class="text-sm font-semibold text-slate-300">TikTok & IG Reference Links</h3>
+                <p class="text-slate-500 text-[10px] mt-1">Scraped from content research — use as style/hook references</p>
+            </div>
+            <div id="inspiration-grid" class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <p class="text-slate-600 text-sm col-span-full text-center py-8">Loading inspiration links...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-6 text-center">
+        <p class="text-slate-600 text-[10px] uppercase tracking-[0.2em]">Content Asset Sheet • Auto-refresh 2 min</p>
+    </div>
+</div>
+
+<script>
+    const API = "http://localhost:3456";
+    let calendarData = [];
+    let pollInterval;
+
+    async function loadData() {
+        try {
+            setStatus("Syncing...", "bg-amber-500/10 text-amber-400");
+            const resp = await fetch(`${API}/api/content-calendar`);
+            if (!resp.ok) throw new Error();
+            const data = await resp.json();
+            calendarData = data;
+            setStatus("Live", "bg-emerald-500/10 text-emerald-400");
+            renderActivity();
+            renderInspiration();
+        } catch {
+            setStatus("⚠ Server off", "bg-amber-500/10 text-amber-400");
+        }
+    }
+
+    function setStatus(text, cls) {
+        document.getElementById("sync-status").textContent = text;
+        document.getElementById("sync-status").className = `px-3 py-1 rounded-full text-xs font-semibold border uppercase tracking-widest ${cls}`;
+    }
+
+    function num(v) {
+        if (!v || v.trim() === "") return "—";
+        const n = parseFloat(v);
+        return isNaN(n) ? "—" : n;
+    }
+
+    function renderActivity() {
+        // Latest row (most recent data)
+        const rows = calendarData.filter(r => r.tab === "Calendar March" || r.tab === "Stories March");
+        const latest = rows[0];
+
+        if (latest) {
+            document.getElementById("kpi-inbox").textContent    = num(latest.inbox_check);
+            document.getElementById("kpi-convo").textContent   = num(latest.new_convo);
+            document.getElementById("kpi-fu").textContent       = num(latest.follow_up_sent);
+            document.getElementById("kpi-hours").textContent   = num(latest.hours_worked);
+            document.getElementById("kpi-calls-prop").textContent   = num(latest.calls_proposed);
+            document.getElementById("kpi-calls-booked").textContent  = num(latest.calls_booked);
+            document.getElementById("kpi-qualified").textContent     = num(latest.qualified_bookings);
+            document.getElementById("kpi-unqualified").textContent   = num(latest.unqualified_bookings);
+            document.getElementById("kpi-icp").textContent         = num(latest.icp_leads_today);
+            document.getElementById("kpi-nurture").textContent       = num(latest.convos_nurtured);
+            document.getElementById("kpi-cal").textContent           = num(latest.calls_on_calendar);
+            document.getElementById("kpi-showed").textContent         = num(latest.calls_showed);
+            document.getElementById("kpi-sets").textContent          = num(latest.sets_closed);
+            document.getElementById("kpi-note").textContent          = latest.situations || "—";
+        }
+
+        // Activity table — all rows
+        const body = document.getElementById("activity-body");
+        const validRows = rows.filter(r => r.date || r.hours_worked || r.new_convo);
+        if (!validRows.length) {
+            body.innerHTML = '<tr><td colspan="9" class="px-4 py-6 text-center text-slate-600">No activity data yet. Start logging in your Calendar March sheet.</td></tr>';
+            return;
+        }
+        body.innerHTML = validRows.slice(0, 30).map(r => `
+            <tr class="hover:bg-white/5">
+                <td class="px-4 py-3 font-semibold text-slate-200 whitespace-nowrap">${r.date || '—'}</td>
+                <td class="px-4 py-3 text-blue-400 text-center">${num(r.inbox_check)}</td>
+                <td class="px-4 py-3 text-pink-400 text-center">${num(r.new_convo)}</td>
+                <td class="px-4 py-3 text-emerald-400 text-center">${num(r.follow_up_sent)}</td>
+                <td class="px-4 py-3 text-center">${num(r.calls_proposed)}</td>
+                <td class="px-4 py-3 text-blue-400 text-center">${num(r.calls_booked)}</td>
+                <td class="px-4 py-3 text-pink-400 text-center">${num(r.icp_leads_today)}</td>
+                <td class="px-4 py-3 text-amber-400 text-center">${num(r.hours_worked)}</td>
+                <td class="px-4 py-3 text-slate-500 text-xs max-w-[150px] truncate">${r.situations || ''}</td>
+            </tr>
+        `).join("");
+    }
+
+    function renderInspiration() {
+        const grid = document.getElementById("inspiration-grid");
+        const links = calendarData.filter(r => r.tab === "Inspiration" && r.link);
+        if (!links.length) {
+            grid.innerHTML = '<p class="text-slate-600 text-sm col-span-full text-center py-8">No inspiration links found in sheet.</p>';
+            return;
+        }
+        grid.innerHTML = links.map(r => {
+            const url = r.link || "";
+            const isTikTok = url.includes("tiktok.com");
+            const isIG = url.includes("instagram.com");
+            const badge = isTikTok ? '<span class="px-2 py-0.5 rounded bg-pink-500/20 text-pink-400 text-[9px] font-bold uppercase">TikTok</span>'
+                        : isIG ? '<span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 text-[9px] font-bold uppercase">IG</span>'
+                        : '<span class="px-2 py-0.5 rounded bg-slate-500/20 text-slate-400 text-[9px] font-bold uppercase">Link</span>';
+            const displayUrl = url.length > 50 ? url.substring(0, 50) + "..." : url;
+            return `
+                <a href="${url}" target="_blank" class="glass p-4 rounded-xl hover:bg-white/5 transition flex items-center justify-between gap-3 group">
+                    <div class="flex items-center gap-2 min-w-0">
+                        ${badge}
+                        <span class="text-slate-400 text-[10px] truncate">${displayUrl}</span>
+                    </div>
+                    <span class="text-slate-600 text-xs group-hover:text-amber-400 transition whitespace-nowrap">Open →</span>
+                </a>
+            `;
+        }).join("");
+    }
+
+    // Tab switching
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+            const tabId = "tab-" + btn.dataset.tab;
+            const el = document.getElementById(tabId);
+            if (el) el.classList.remove("hidden");
+        });
+    });
+
+    loadData();
+    pollInterval = setInterval(loadData, 120000);
+</script>
+</body>
+</html>

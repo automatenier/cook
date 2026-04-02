@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JORDAN ENGO | Meta Ads Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f1a; color: #f8fafc; }
+        .glass { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .accent-glow-rose  { box-shadow: 0 0 30px rgba(244, 63, 94, 0.15); border-left: 4px solid #f43f5e; }
+        .accent-glow-green { box-shadow: 0 0 30px rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; }
+        .status-live { animation: pulse-ring 2s ease-out infinite; }
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70%  { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        tr:hover td { background: rgba(255,255,255,0.03); }
+    </style>
+</head>
+<body class="p-8">
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- ── Navigation ─────────────────────────────────────────────────────── -->
+    <div class="flex justify-between items-end mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-white tracking-tight">META <span class="text-rose-500">ADS</span> HUB</h1>
+            <p class="text-slate-400 text-xs font-mono">JORDAN ENGO • Supabase Live</p>
+            <div class="mt-4 flex gap-4 text-xs">
+                <a href="index.html"        class="text-slate-400 hover:text-white transition">← Hub</a>
+                <a href="Agency-BIZ.html"   class="text-slate-400 hover:text-white transition">S1</a>
+                <a href="Scrape.html"       class="text-slate-400 hover:text-white transition">S2</a>
+                <a href="Talent EOD.html"   class="text-slate-400 hover:text-white transition">S3</a>
+                <a href="AI EOD.html"       class="text-slate-400 hover:text-white transition">S4</a>
+                <a href="Content Asset.html"class="text-slate-400 hover:text-white transition">S5</a>
+                <a href="Client Sheet.html" class="text-slate-400 hover:text-white transition">S6</a>
+                <a href="CRM.html"          class="text-slate-400 hover:text-white transition">S7</a>
+                <a href="Meta Ads.html"     class="text-rose-500 font-bold border-b-2 border-rose-500 pb-1">META</a>
+            </div>
+        </div>
+        <div class="text-right">
+            <span id="sync-status" class="status-live px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 uppercase tracking-widest">● Live</span>
+            <p id="last-updated" class="text-slate-600 text-[10px] mt-1">Connecting to Supabase...</p>
+        </div>
+    </div>
+
+    <!-- ── KPI Grid ──────────────────────────────────────────────────────── -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+        <div class="glass p-5 rounded-2xl accent-glow-rose">
+            <p class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider">Total Spend</p>
+            <h2 id="kpi-spend" class="text-3xl font-bold mt-2 text-rose-400">—</h2>
+            <p class="text-slate-500 text-[10px] mt-1">IDR</p>
+        </div>
+        <div class="glass p-5 rounded-2xl">
+            <p class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider">Impressions</p>
+            <h2 id="kpi-impr" class="text-3xl font-bold mt-2 text-blue-400">—</h2>
+            <p class="text-slate-500 text-[10px] mt-1">total</p>
+        </div>
+        <div class="glass p-5 rounded-2xl">
+            <p class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider">CTR</p>
+            <h2 id="kpi-ctr" class="text-3xl font-bold mt-2 text-violet-400">—</h2>
+            <p class="text-slate-500 text-[10px] mt-1">click rate</p>
+        </div>
+        <div class="glass p-5 rounded-2xl">
+            <p class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider">Msg Started</p>
+            <h2 id="kpi-msg" class="text-3xl font-bold mt-2 text-cyan-400">—</h2>
+            <p class="text-slate-500 text-[10px] mt-1">7-day</p>
+        </div>
+        <div class="glass p-5 rounded-2xl">
+            <p class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider">Leads</p>
+            <h2 id="kpi-lead" class="text-3xl font-bold mt-2 text-pink-400">—</h2>
+            <p class="text-slate-500 text-[10px] mt-1">captured</p>
+        </div>
+        <div class="glass p-5 rounded-2xl accent-glow-green">
+            <p class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider">Cost / Msg</p>
+            <h2 id="kpi-cpm" class="text-3xl font-bold mt-2 text-emerald-400">—</h2>
+            <p class="text-slate-500 text-[10px] mt-1">IDR</p>
+        </div>
+    </div>
+
+    <!-- ── Charts ───────────────────────────────────────────────────────── -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div class="glass p-6 rounded-2xl lg:col-span-2">
+            <h3 class="text-sm font-semibold text-slate-300 mb-4">Spend vs Impressions by Campaign</h3>
+            <div id="spendChart" class="h-56"></div>
+        </div>
+        <div class="glass p-6 rounded-2xl">
+            <h3 class="text-sm font-semibold text-slate-300 mb-4">Spend Distribution</h3>
+            <div id="donutChart" class="h-56"></div>
+        </div>
+    </div>
+
+    <!-- ── Campaign Table ─────────────────────────────────────────────────── -->
+    <div class="glass rounded-2xl overflow-hidden">
+        <div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+            <h3 class="text-sm font-semibold text-slate-300">Campaign Breakdown</h3>
+            <span class="text-xs text-rose-500 uppercase tracking-widest font-bold">Auto-refresh 15 min</span>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-white/5 text-slate-500 text-[10px] uppercase tracking-widest">
+                    <tr>
+                        <th class="px-6 py-4 font-semibold">Campaign</th>
+                        <th class="px-6 py-4 font-semibold text-right">Spend (IDR)</th>
+                        <th class="px-6 py-4 font-semibold text-right">Impressions</th>
+                        <th class="px-6 py-4 font-semibold text-right">CTR</th>
+                        <th class="px-6 py-4 font-semibold text-right">Msg Started</th>
+                        <th class="px-6 py-4 font-semibold text-right">Leads</th>
+                        <th class="px-6 py-4 font-semibold text-right">Cost/Msg</th>
+                    </tr>
+                </thead>
+                <tbody id="campaign-body" class="divide-y divide-white/5 text-sm">
+                    <tr><td colspan="7" class="px-6 py-8 text-center text-slate-600">Loading from Supabase...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center">
+        <p class="text-slate-600 text-[10px] uppercase tracking-[0.2em]">Meta Ads Hub • Supabase Realtime • GitHub Actions 15-min sync</p>
+    </div>
+</div>
+
+<!-- ── Supabase Realtime Logic ─────────────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    // ── Supabase Config (public anon key — safe for client-side) ──
+    const SB_URL = "https://xmfkewjxjsrffvmlcsid.supabase.co";
+    const SB_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtZmtewjxanNyZmZ2bWxjc2lkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MTUyNjEsImV4cCI6MjA4OTQ5MTI2MX0.Ra00Q2VbWhp-303XVjn4-94D1QUjFv-2rb9-sarrk98";
+    const TABLE = "meta_ads_campaigns";
+
+    const { createClient } = window.supabaseJs;
+    const sb = createClient(SB_URL, SB_ANON_KEY);
+
+    let spendChart, donutChart;
+
+    // ── Boot ──
+    async function init() {
+        initCharts();
+        await fetchData();
+
+        // ── Realtime subscription — any DB change pushes live update ──
+        sb.channel("meta-ads-realtime")
+            .on(
+                "postgres_changes",
+                { event: "*", schema: "public", table: TABLE },
+                (payload) => {
+                    console.log("[REALTIME] Change detected:", payload);
+                    fetchData();
+                }
+            )
+            .subscribe();
+    }
+
+    // ── Fetch latest data from Supabase ──
+    async function fetchData() {
+        document.getElementById("sync-status").textContent = "● Syncing...";
+        document.getElementById("sync-status").className =
+            "px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20 uppercase tracking-widest";
+
+        const { data, error } = await sb
+            .from(TABLE)
+            .select("*")
+            .order("fetched_at", { ascending: false })
+            .limit(100);
+
+        if (error || !data || !data.length) {
+            console.error("Supabase fetch error:", error);
+            document.getElementById("sync-status").textContent = "✗ Error";
+            document.getElementById("sync-status").className =
+                "px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-semibold border border-red-500/20 uppercase tracking-widest";
+            return;
+        }
+
+        // Deduplicate: keep only the latest fetch per campaign
+        const latest = {};
+        for (const row of data) {
+            const key = row.campaign_id;
+            if (!latest[key]) latest[key] = row;
+        }
+        const campaigns = Object.values(latest);
+
+        updateKPIs(campaigns);
+        updateTable(campaigns);
+        updateCharts(campaigns);
+
+        document.getElementById("sync-status").textContent = "● Live";
+        document.getElementById("sync-status").className =
+            "status-live px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 uppercase tracking-widest";
+        document.getElementById("last-updated").textContent =
+            "Updated " + new Date().toLocaleTimeString();
+    }
+
+    // ── KPI Cards ──
+    function updateKPIs(campaigns) {
+        let totalSpend = 0, totalImpr = 0, totalCtr = 0, ctrCount = 0;
+        let totalMsg = 0, totalLead = 0;
+
+        for (const c of campaigns) {
+            totalSpend += parseFloat(c.spend || 0);
+            totalImpr  += parseInt(c.impressions || 0);
+            if (c.ctr) { totalCtr += parseFloat(c.ctr); ctrCount++; }
+            totalMsg   += parseInt(c.messages_7d || 0);
+            totalLead  += parseInt(c.leads || 0);
+        }
+
+        const avgCtr = ctrCount ? (totalCtr / ctrCount * 100).toFixed(2) : "0.00";
+        const costMsg = totalMsg > 0 ? Math.round(totalSpend / totalMsg) : 0;
+
+        document.getElementById("kpi-spend").textContent = totalSpend > 0 ? formatIDR(totalSpend) : "—";
+        document.getElementById("kpi-impr").textContent  = totalImpr  > 0 ? formatNum(totalImpr)  : "—";
+        document.getElementById("kpi-ctr").textContent   = avgCtr + "%";
+        document.getElementById("kpi-msg").textContent    = formatNum(totalMsg);
+        document.getElementById("kpi-lead").textContent  = formatNum(totalLead);
+        document.getElementById("kpi-cpm").textContent   = costMsg > 0 ? formatIDR(costMsg) : "—";
+    }
+
+    // ── Table ──
+    function updateTable(campaigns) {
+        const tbody = document.getElementById("campaign-body");
+        tbody.innerHTML = "";
+
+        if (!campaigns.length) {
+            tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-slate-600">No data — run the sync workflow</td></tr>';
+            return;
+        }
+
+        campaigns.sort((a, b) => parseFloat(b.spend || 0) - parseFloat(a.spend || 0));
+
+        for (const c of campaigns) {
+            const spend = parseFloat(c.spend || 0);
+            const impr  = parseInt(c.impressions || 0);
+            const ctr   = c.ctr ? (parseFloat(c.ctr) * 100).toFixed(2) + "%" : "—";
+            const msg   = parseInt(c.messages_7d || 0);
+            const lead  = parseInt(c.leads || 0);
+            const cpm   = c.cost_per_msg ? formatIDR(c.cost_per_msg) : (msg > 0 ? formatIDR(spend / msg) : "—");
+
+            const tr = document.createElement("tr");
+            tr.className = "border-b border-white/5 hover:bg-white/5 transition";
+            tr.innerHTML = `
+                <td class="px-6 py-4 font-semibold text-slate-200 text-xs leading-tight">${esc(c.campaign_name || "Unnamed")}</td>
+                <td class="px-6 py-4 text-right text-rose-400 font-mono text-xs">${spend > 0 ? formatIDR(spend) : "—"}</td>
+                <td class="px-6 py-4 text-right text-blue-400 font-mono text-xs">${impr > 0 ? formatNum(impr) : "—"}</td>
+                <td class="px-6 py-4 text-right text-violet-400 font-mono text-xs">${ctr}</td>
+                <td class="px-6 py-4 text-right text-cyan-400 font-mono text-xs font-bold">${formatNum(msg)}</td>
+                <td class="px-6 py-4 text-right text-pink-400 font-mono text-xs">${formatNum(lead)}</td>
+                <td class="px-6 py-4 text-right text-emerald-400 font-mono text-xs">${cpm}</td>
+            `;
+            tbody.appendChild(tr);
+        }
+    }
+
+    // ── ApexCharts ──
+    function initCharts() {
+        spendChart = new ApexCharts(document.querySelector("#spendChart"), {
+            type: "bar",
+            height: 220,
+            toolbar: { show: false },
+            chart: { background: "transparent", fontFamily: "Plus Jakarta Sans, sans-serif" },
+            theme: { mode: "dark" },
+            colors: ["#f43f5e", "#3b82f6"],
+            plotOptions: { bar: { borderRadius: 8, columnWidth: "50%" } },
+            xaxis: {
+                labels: { style: { colors: "#64748b", fontSize: "10px" } },
+                axisBorder: { show: false },
+                categories: []
+            },
+            yaxis: {
+                labels: { style: { colors: "#64748b", fontSize: "10px" }, formatter: v => formatIDR(v) }
+            },
+            grid: { borderColor: "rgba(255,255,255,0.05)", strokeDashArray: 4 },
+            dataLabels: { enabled: false },
+            legend: { labels: { colors: "#94a3b8" }, position: "top" },
+            tooltip: { theme: "dark", y: { formatter: v => formatIDR(v) } },
+            series: [{ name: "Spend (IDR)", data: [] }, { name: "Impressions", data: [] }]
+        });
+
+        donutChart = new ApexCharts(document.querySelector("#donutChart"), {
+            type: "donut",
+            height: 220,
+            toolbar: { show: false },
+            chart: { background: "transparent", fontFamily: "Plus Jakarta Sans, sans-serif" },
+            theme: { mode: "dark" },
+            colors: ["#f43f5e","#3b82f6","#10b981","#f59e0b","#8b5cf6","#06b6d4"],
+            labels: [],
+            legend: { position: "bottom", labels: { colors: "#94a3b8", fontSize: "10px" } },
+            dataLabels: { enabled: false },
+            plotOptions: { pie: { donut: { size: "65%" } } },
+            tooltip: { theme: "dark" },
+            series: []
+        });
+
+        spendChart.render();
+        donutChart.render();
+    }
+
+    function updateCharts(campaigns) {
+        const sorted = [...campaigns].sort((a, b) => parseFloat(b.spend || 0) - parseFloat(a.spend || 0)).slice(0, 8);
+        const names  = sorted.map(c => esc((c.campaign_name || "Unnamed").substring(0, 18)));
+        const spends = sorted.map(c => parseFloat(c.spend || 0));
+        const imprs  = sorted.map(c => parseInt(c.impressions || 0));
+
+        spendChart.updateOptions({
+            xaxis: { categories: names },
+            series: [{ name: "Spend (IDR)", data: spends }, { name: "Impressions", data: imprs }]
+        });
+
+        const top6 = sorted.slice(0, 6);
+        donutChart.updateOptions({
+            labels: top6.map(c => esc((c.campaign_name || "Unnamed").substring(0, 16))),
+            series: top6.map(c => parseFloat(c.spend || 0))
+        });
+    }
+
+    // ── Utilities ──
+    function formatIDR(n) {
+        if (n >= 1e9) return "Rp" + (n/1e9).toFixed(1) + "B";
+        if (n >= 1e6) return "Rp" + (n/1e6).toFixed(1) + "M";
+        if (n >= 1e3) return "Rp" + (n/1e3).toFixed(0) + "K";
+        return "Rp" + n.toFixed(0);
+    }
+    function formatNum(n) {
+        if (n >= 1e6) return (n/1e6).toFixed(1) + "M";
+        if (n >= 1e3) return (n/1e3).toFixed(1) + "K";
+        return n.toString();
+    }
+    function esc(s) {
+        return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    }
+
+    init();
+</script>
+</body>
+</html>

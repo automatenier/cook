@@ -1,0 +1,62 @@
+{
+  "generated": "2026-03-31T16:50:16.957884",
+  "total_sheets": 7,
+  "backups": [
+    {
+      "name": "SAVASA_CRM",
+      "sheet_id": "1vJn-5RMcIxZLZBFoSlQJpOwcA_BxXdb39XXY_X2Mos8",
+      "title": "CRM",
+      "backup_path": "H:\\My Drive\\Cook\\___Data\\B Real Estate\\_gsheets_backup\\SAVASA_CRM_2026-03-31_1650",
+      "backed_up": "2026-03-31T16:50:16.957884",
+      "status": "OK"
+    },
+    {
+      "name": "Content_Asset",
+      "sheet_id": "1ryyHlW8m_7pla68VLp8wXkpnPmj6uX8DxyICjN4cqGQ",
+      "title": "Content Asset",
+      "backup_path": "H:\\My Drive\\Cook\\___Data\\B Real Estate\\_gsheets_backup\\Content_Asset_2026-03-31_1650",
+      "backed_up": "2026-03-31T16:50:16.957884",
+      "status": "OK"
+    },
+    {
+      "name": "Agency_BIZ",
+      "sheet_id": "1TsCCRHzPSLAuyZRB3h7F4zyugFbqbYxN4L4uXHEa0G8",
+      "title": "Agency-BIZ",
+      "backup_path": "H:\\My Drive\\Cook\\___Data\\B Real Estate\\_gsheets_backup\\Agency_BIZ_2026-03-31_1650",
+      "backed_up": "2026-03-31T16:50:16.957884",
+      "status": "OK"
+    },
+    {
+      "name": "Scrape",
+      "sheet_id": "1BCfwdILicqu6dC824Vvdbnqzwc18-FWGc2Y37sUdRVE",
+      "title": "Scrape",
+      "backup_path": "H:\\My Drive\\Cook\\___Data\\B Real Estate\\_gsheets_backup\\Scrape_2026-03-31_1650",
+      "backed_up": "2026-03-31T16:50:16.957884",
+      "status": "OK"
+    },
+    {
+      "name": "Talent_EOD",
+      "sheet_id": "18_zwGJOdQ0_dthFW_zgf0Jz7h7ZWAk-33TENlX6N1Qc",
+      "title": "Talent EOD",
+      "backup_path": "H:\\My Drive\\Cook\\___Data\\B Real Estate\\_gsheets_backup\\Talent_EOD_2026-03-31_1650",
+      "backed_up": "2026-03-31T16:50:16.957884",
+      "status": "OK"
+    },
+    {
+      "name": "AI_EOD",
+      "sheet_id": "1yQlVoPhL1qP1_py7_2uoSVaKgICfERmwlcyTTQgW2jc",
+      "title": "AI EOD",
+      "backup_path": "H:\\My Drive\\Cook\\___Data\\B Real Estate\\_gsheets_backup\\AI_EOD_2026-03-31_1650",
+      "backed_up": "2026-03-31T16:50:16.957884",
+      "status": "OK"
+    },
+    {
+      "name": "Client_Sheet",
+      "sheet_id": "1JLiEJkV3-FbMkOS9-DOUOD1_N3vBcY08Rrgl41QMM14",
+      "title": "Client SHeet",
+      "backup_path": "H:\\My Drive\\Cook\\___Data\\B Real Estate\\_gsheets_backup\\Client_Sheet_2026-03-31_1650",
+      "backed_up": "2026-03-31T16:50:16.957884",
+      "status": "OK"
+    }
+  ]
+}

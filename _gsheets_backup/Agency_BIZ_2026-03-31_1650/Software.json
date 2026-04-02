@@ -1,0 +1,30 @@
+[
+  {
+    "Name": "VPS Hosting",
+    "Price": "Rp215,000",
+    "Due Date": "1/1",
+    "Link": "https://hpanel.hostinger.com/vps",
+    "Details": "811@gmail"
+  },
+  {
+    "Name": "Google Workspaces",
+    "Price": "Rp197,000",
+    "Due Date": "1/1",
+    "Link": "https://workspace.google.com/checkout/payment?snip=x",
+    "Details": "811@gmail"
+  },
+  {
+    "Name": "Capcut Pro (yearly)",
+    "Price": "Rp94,000",
+    "Due Date": "1/1",
+    "Link": "",
+    "Details": ""
+  },
+  {
+    "Name": "Elevenlabs",
+    "Price": "Rp800,000",
+    "Due Date": "11/1",
+    "Link": "",
+    "Details": ""
+  }
+]
